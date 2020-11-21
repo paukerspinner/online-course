@@ -1,0 +1,68 @@
+// Body
+// $body-bg: #f8fafc;
+
+$body-bg-color: #e8f1fc;
+$body-text-color: #3b5064;
+
+// Typography
+$font-family-sans-serif: 'Nunito', sans-serif;
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+
+// Colors
+$blue: #3490dc;
+$indigo: #6574cd;
+$purple: #9561e2;
+$pink: #f66d9b;
+$red: #e3342f;
+$orange: #f6993f;
+$yellow: #ffed4a;
+$green: #38c172;
+$teal: #4dc0b5;
+$cyan: #6cb2eb;
+
+
+// Color Variables
+// Bootstrap Color Overrides
+
+$white: #fff !default;
+$gray-100: #f8f9fc !default;
+$gray-200: #eaecf4 !default;
+$gray-300: #dddfeb !default;
+$gray-400: #d1d3e2 !default;
+$gray-500: #b7b9cc !default;
+$gray-600: #858796 !default;
+$gray-700: #6e707e !default;
+$gray-800: #5a5c69 !default;
+$gray-900: #3a3b45 !default;
+$black: #000 !default;
+
+$blue: #4e73df !default;
+$indigo: #6610f2 !default;
+$purple: #6f42c1 !default;
+$pink: #e83e8c !default;
+$red: #e74a3b !default;
+$orange: #fd7e14 !default;
+$yellow: #f6c23e !default;
+$green: #1cc88a !default;
+$teal: #20c9a6 !default;
+$cyan: #36b9cc !default;
+
+// Custom Colors
+$brand-google: #ea4335 !default;
+$brand-facebook: #3b5998 !default;
+
+// Set Contrast Threshold
+$yiq-contrasted-threshold: 195 !default;
+
+// Typography
+$body-color: $gray-600 !default;
+
+//Sidebar
+// Spacing Variables
+// Change below variable if the height of the navbar changes
+$topbar-base-height: 4.375rem !default;
+// Change below variable to change the width of the sidenav
+$sidebar-base-width: 14rem !default;
+// Change below variable to change the width of the sidenav when collapsed
+$sidebar-collapsed-width: 6.5rem !default;

@@ -1,0 +1,64 @@
+#banner-top {
+    background: url('https://www.fulltimenomad.com/wp-content/uploads/2016/12/Best-Online-Course-Providers.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    .banner-text {
+        position: absolute;
+        text-align: center;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 0.3rem;
+        color: #ffffff;
+        font-size: 150%;
+        h1 {
+            font-weight: 800;
+        }
+    }
+}
+
+.banner {
+    position: relative;
+    height: 500px;
+    
+    .banner-cover {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+        background: -webkit-linear-gradient(top, rgba($blue, 0.5), rgba(0, 0, 0, 0.5));
+        background: -moz-linear-gradient(top, rgba($blue, 0.5), rgba(0, 0, 0, 0.5));
+        background: linear-gradient(to bottom, rgba($blue, 0.5), rgba(0, 0, 0, 0.5));
+    }
+}
+
+#course-banner {
+    background: url('https://cdn.csu.edu.au/__data/assets/image/0006/2822424/banner-m-cyber-security.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    .banner-text {
+        position: absolute;
+        width: 50%;
+        min-width: 300px;
+        top: 50%;
+        left: 5%;
+        transform: translate(0, -50%);
+        border-radius: 0.3rem;
+        color: #ffffff;
+        font-size: 150%;
+        h1 {
+            font-weight: 800;
+        }
+    }
+
+    @media only screen and (max-width: 767px) {
+        .banner-text {
+            text-align: center;
+            width: 90%;
+        }
+      }
+}

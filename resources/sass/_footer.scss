@@ -1,0 +1,50 @@
+.footer {
+    margin-top: 20px;
+    color: $body-text-color;
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0
+    }
+    
+    ul>li:hover {
+        color: #957bda;
+        cursor: pointer;
+    }
+
+    a {
+        color: $body-text-color;
+    }
+
+    .footer-contact {
+        >* {
+            margin: 0px 10px 10px 0px;
+        }
+    }
+
+    .footer-newslatter {
+        .group-input {
+            margin: 1rem 0rem;
+            >* {
+                padding: 5px 10px;
+            }
+        }
+        input {
+            border-radius: 5px 0px 0px 5px;
+            outline: none;
+            border: 2px solid $body-text-color;
+            border-right: none;
+        }
+
+        .btn-subscribe {
+            border: 2px solid $body-text-color;
+            border-radius: 0px 5px 5px 0px;
+            border-left: 1px;
+            outline: none;
+        }
+        .btn-subscribe:hover {
+            background-color: $body-bg-color;
+        }
+    }
+}
+

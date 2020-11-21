@@ -1,0 +1,62 @@
+#aboutus {
+    .card-aboutus {
+        max-width: 500px;
+        padding: 1em;
+        background: #ffffff;
+        margin: 0em auto;
+        margin-top: 1em;
+        border-radius: 5px;
+        .card-img {
+            font-size: 300%;
+        }
+    }
+}
+
+#course-target {
+    .card-target {
+        max-width: 500px;
+        padding: 1em 0px;
+        background: #ffffff;
+        text-align: left;
+        margin: auto;
+        margin-top: 1em;
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        .card-img {
+            display: flex;
+            align-items: center;
+            font-size: 300%;
+            width: 100px;
+            justify-content: center;
+        }
+        .card-text {
+            padding-right: 1em;
+        }
+    }
+}
+
+.content {
+    margin: 0px 0px auto;
+    padding: 20px;
+    color: $body-text-color;
+    background: $body-bg-color;
+    text-align: center;
+
+    .row {
+        margin: 30px 0px;
+    }
+    >* {
+        margin: 30px;
+    }
+
+    h1 {
+        display: inline-block;
+        border-bottom: 3px solid $body-text-color;
+    }
+    p {
+        margin: 10px auto;
+        display: block;
+        max-width: 600px;
+    }
+}

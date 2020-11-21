@@ -1,0 +1,9 @@
+export const TOGGLE_STATUS = 'TOGGLE_STATUS';
+
+export const LOGOUT = 'LOGOUT';
+
+export const SUCCESS_LOGIN = 'SUCCESS_LOGIN';
+export const FAILURE_LOGIN = 'FAILURE_LOGIN';
+
+export const SUCCESS_CHECK_TOKEN = 'SUCCESS_CHECK_TOKEN';
+export const FAILURE_CHECK_TOKEN = 'FAILURE_CHECK_TOKEN';

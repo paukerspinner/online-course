@@ -1,0 +1,23 @@
+.btn-circle {
+    position: relative;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+
+    >* {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.btn-social {
+    background-color: $body-bg-color;
+    color: $body-text-color;
+}
+
+.btn-social:hover {
+    background-color: $body-text-color;
+    color: $body-bg-color;
+}
