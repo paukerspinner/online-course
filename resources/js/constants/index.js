@@ -7,3 +7,15 @@ export const FAILURE_LOGIN = 'FAILURE_LOGIN';
 
 export const SUCCESS_CHECK_TOKEN = 'SUCCESS_CHECK_TOKEN';
 export const FAILURE_CHECK_TOKEN = 'FAILURE_CHECK_TOKEN';
+
+
+export const QUESTION_TYPE = {
+    SINGLE_CHOICE: 0,
+    MULTIPLE_CHOICE: 1
+}
+
+export const QUESTION_LEVEL = {
+    EASY: 0,
+    MEDIUM: 1,
+    HARD: 2
+}

@@ -25,4 +25,11 @@ Route::group(['prefix' => 'v1'], function() {
     Route::get('resendCode', 'AuthController@resendCode');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
+
+
+    Route::apiResource('questions', 'QuestionController');
+    
+    Route::get('tests/make-test', 'TestController@makeTest');
+    Route::post('tests/submit-answers', 'TestController@submitAnswers');
+    Route::apiResource('tests', 'TestController');
 });

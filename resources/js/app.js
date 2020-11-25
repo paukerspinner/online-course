@@ -14,10 +14,21 @@ import Login from './components/auth/login';
 import Register from './components/auth/register';
 import ProfilePage from './page/profilePage';
 import HomePage from './page/homePage';
+import QuestionForm from './components/questions/questionForm';
+import NotFoundPage from './page/notFound';
+import QuesitonCreatePage from './page/question/create';
+import QuestionEditPage from './page/question/edit';
+import QuestionManagement from './page/question'
+import CoursePage from './page/course';
 
+
+// import for testing
+import QuestionShow from './components/questions/questionShow';
+//
 
 class App extends React.Component {
     componentDidMount() {
+        window.scrollTo(1000,1000);
         API.checkAuthenticatedToken(this.props.access_token).then(res => {
             this.props.successCheckToken(res.data);
         }).catch(err => {
@@ -27,6 +38,7 @@ class App extends React.Component {
     render() {
         return (
             <div id="page-top">
+
                 <div id="wrapper">
                     {this.props.is_admin && <Sidebar />}
                     <div id="content-wrapper" className="d-flex flex-column">
@@ -34,14 +46,24 @@ class App extends React.Component {
                             <Topbar />
                             <div>
                                 <Switch>
+                                    <Route path="/test" exact component={QuestionShow} />
                                     <Route path="/" exact component={HomePage} />
                                     <Route path="/login" exact component={Login} />
                                     <Route path="/register" exact component={Register} />
                                     <Route path="/profile" exact component={ProfilePage} />
+                                    <Route path="/course" exact component={CoursePage} />
+
+                                    {this.props.is_admin && 
+                                        (<Switch>
+                                            <Route path="/management/questions/create" exact component={QuesitonCreatePage} />
+                                            <Route path="/management/questions/:id?" exact component={QuestionManagement} />
+                                            <Route path="/management/questions/:id/edit" exact component={QuestionEditPage}/>
+                                        </Switch>)
+                                    }
                                     <Route>
-                                        {/* {this.props.is_admin && <Admin/>}
-                                        {!this.props.is_admin && <Client/>} */}
+                                        <NotFoundPage />
                                     </Route>
+
                                 </Switch>
                             </div>
                         </div>

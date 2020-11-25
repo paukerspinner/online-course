@@ -1,0 +1,19 @@
+.editorClassName {
+    padding: 1rem;
+    min-height: 300px;
+}
+
+.wrapperClassName {
+    border: 1px solid #d1d3e2;
+    border-radius: 0.25rem;
+    color: #000;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.toolbarClassName {
+    border: none;
+    a {
+        text-decoration: none;
+        color: black;
+    }
+}

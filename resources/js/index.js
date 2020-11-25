@@ -23,7 +23,6 @@ import App from './app';
 import { createStore } from 'redux';
 import myReducer from './reducers';
 import { Provider } from 'react-redux';
-import { connect } from 'react-redux';
 
 const store = createStore(
     myReducer,

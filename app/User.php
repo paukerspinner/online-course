@@ -12,7 +12,7 @@ class User extends Authenticatable implements JWTSubject
     use Notifiable;
 
     protected $fillable = [
-        'email', 'name', 'surname', 'patronymic', 'role', 'verified', 'password',
+       'email', 'name', 'surname', 'patronymic', 'role', 'verified', 'password',
     ];
 
     protected $hidden = [
@@ -21,6 +21,10 @@ class User extends Authenticatable implements JWTSubject
 
     public function verification() {
         return $this->hasOne('App\Verification', 'user_id');
+    }
+
+    public function tests() {
+        return $this->hasMany('App\Test', 'user_id');
     }
 
     public function getJWTIdentifier()

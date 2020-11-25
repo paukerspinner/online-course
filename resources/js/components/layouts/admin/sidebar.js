@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class Sidebar extends React.Component {
     render() {
@@ -23,8 +24,28 @@ class Sidebar extends React.Component {
                 <hr className="sidebar-divider" />
 
                 <div className="sidebar-heading">
-                    Interface
+                    Management
                     </div>
+
+                <li className="nav-item">
+                    <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAppraisals"
+                        aria-expanded="true" aria-controls="collapseAppraisals">
+                        <i className="fas fa-fw fa-cog"></i>
+                        <span>Appraisals</span>
+                    </a>
+                    <div id="collapseAppraisals" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div className="bg-white py-2 collapse-inner rounded">
+                            <Link className="collapse-item" to="/test-management">Test</Link>
+                            <Link className="collapse-item" to="/management/questions">Question</Link>
+                        </div>
+                    </div>
+                </li>
+
+                <hr className="sidebar-divider" />
+
+                <div className="sidebar-heading">
+                    Interface
+                </div>
 
                 <li className="nav-item">
                     <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"

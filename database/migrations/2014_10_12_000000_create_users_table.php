@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('patronymic', 255)->nullable();
             $table->string('role', 255)->default('user');
             $table->boolean('verified')->default(false);
+            $table->tinyInteger('level')->nullable();
             $table->string('password');
             $table->timestamps();
         });
