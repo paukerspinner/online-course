@@ -19,6 +19,8 @@ class CreateTestsTable extends Migration
             $table->unsignedBigInteger('section_id');
             $table->tinyInteger('level');
             $table->tinyInteger('grade')->nullable();
+            $table->timestamp('started_at')->nullable();
+            $table->timestamp('finished_at')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
             $table->timestamps();

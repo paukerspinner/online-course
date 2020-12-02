@@ -5,59 +5,69 @@ import * as API from './ulties/api';
 import * as actions from './actions';
 
 import Topbar from './components/commons/topbar';
-import Sidebar from './components/layouts/admin/sidebar';
+import Sidebar from './components/commons/sidebar';
 import Footer from './components/commons/footer';
+import AuthRoute from './components/auth/authRoute';
 
-import Client from './components/layouts/client';
-import Admin from './components/layouts/admin';
 import Login from './components/auth/login';
 import Register from './components/auth/register';
 import ProfilePage from './page/profilePage';
 import HomePage from './page/homePage';
-import QuestionForm from './components/questions/questionForm';
 import NotFoundPage from './page/notFound';
-import QuesitonCreatePage from './page/question/create';
-import QuestionEditPage from './page/question/edit';
-import QuestionManagement from './page/question'
+import QuesitonCreatePage from './page/management/questions/create';
+import QuestionEditPage from './page/management/questions/edit';
+import QuestionManagement from './page/management/questions'
 import CoursePage from './page/course';
-
+import TestPage from './page/course/test';
+import TestingPage from './page/course/testing';
+import ProgressPage from './page/course/progress';
+import MaterialManagement from './page/management/materials';
+import MaterialCreatePage from './page/management/materials/create';
+import MaterialEditPage from './page/management/materials/edit';
 
 // import for testing
-import QuestionShow from './components/questions/questionShow';
+// import NotFoundPage from './page/notFound';
 //
 
 class App extends React.Component {
     componentDidMount() {
-        window.scrollTo(1000,1000);
-        API.checkAuthenticatedToken(this.props.access_token).then(res => {
-            this.props.successCheckToken(res.data);
+        // window.scrollTo(1000,1000); -> running
+        const { successCheckToken, failureCheckToken } = this.props;
+        API.checkAuthenticatedToken().then(res => {
+            successCheckToken(res.data);
         }).catch(err => {
-            this.props.failureCheckToken(err.response);
+            failureCheckToken(err.response);
         })
     }
     render() {
+        const { is_logged, is_admin } = this.props;
         return (
             <div id="page-top">
-
                 <div id="wrapper">
-                    {this.props.is_admin && <Sidebar />}
+                    {is_admin && <Sidebar />}
                     <div id="content-wrapper" className="d-flex flex-column">
                         <div id="content">
                             <Topbar />
                             <div>
                                 <Switch>
-                                    <Route path="/test" exact component={QuestionShow} />
+                                    {/* <Route path="/test" exact component={QuestionShow} /> */}
                                     <Route path="/" exact component={HomePage} />
                                     <Route path="/login" exact component={Login} />
                                     <Route path="/register" exact component={Register} />
-                                    <Route path="/profile" exact component={ProfilePage} />
-                                    <Route path="/course" exact component={CoursePage} />
+                                    <AuthRoute path="/profile" exact component={ProfilePage} />
+                                    <AuthRoute path="/course" exact component={CoursePage} />
+                                    <AuthRoute path="/course/test" exact component={TestPage}/>
+                                    <AuthRoute path="/course/testing" exact component={TestingPage}/>
+                                    <AuthRoute path="/course/progress" exact component={ProgressPage}/>
 
-                                    {this.props.is_admin && 
+                                    {is_admin && 
                                         (<Switch>
                                             <Route path="/management/questions/create" exact component={QuesitonCreatePage} />
                                             <Route path="/management/questions/:id?" exact component={QuestionManagement} />
                                             <Route path="/management/questions/:id/edit" exact component={QuestionEditPage}/>
+                                            <Route path="/management/materials" exact component={MaterialManagement} />
+                                            <Route path="/management/materials/create" exact component={MaterialCreatePage} />
+                                            <Route path="/management/materials/:id/edit" exact component={MaterialEditPage} />
                                         </Switch>)
                                     }
                                     <Route>
@@ -78,8 +88,7 @@ class App extends React.Component {
 const mapStateToProps = state => {
     return {
         is_admin: state.auth.user && state.auth.user.role == 'admin',
-        // is_user : state.auth.user && state.auth.user.role == 'user',
-        access_token: state.auth.access_token
+        is_logged: state.auth.is_logged
     }
 }
 

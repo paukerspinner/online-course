@@ -1,9 +1,10 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as API from '../../ulties/api';
-import { QUESTION_LEVEL, QUESTION_TYPE } from '../../constants';
-import QuestionShow from '../../components/questions/questionShow';
+import * as API from '../../../ulties/api';
+import { QUESTION_LEVEL, QUESTION_TYPE } from '../../../constants';
+import QuestionShow from '../../../components/questions/questionShow';
+import BreadCrumb from '../../../components/commons/breadcrumb';
 
 class QuestionManagement extends React.Component {
     constructor(props) {
@@ -33,7 +34,8 @@ class QuestionManagement extends React.Component {
         const { questions, preview_question_id } = this.state;
         return (
             <div className="container mt-4">
-                <Link to="/management/questions/create" className="btn btn-primary">Create New Question</Link>
+                <BreadCrumb breadcrumb_items={breadcrumb_items}/>
+                <Link to="/management/questions/create" className="btn btn-primary mt-4">Create New Question</Link>
                 <table className="table table-hover mt-4">
                     <thead>
                         <tr className="text-center">
@@ -44,18 +46,18 @@ class QuestionManagement extends React.Component {
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
-                    {/* <tbody> */}
+                    <tbody>
                     {questions.map((question, idx) => {
                         return (
-                            <tbody key={idx}>
+                            <React.Fragment key={idx}>
                                 <tr className="text-center">
                                     <td>{idx+1}</td>
                                     <td>{question.section_id}</td>
                                     <td>{question.level == QUESTION_LEVEL.EASY ? 'Easy' : question.level == QUESTION_LEVEL.MEDIUM? 'Medium' : 'Hard'}</td>
                                     <td>{question.type == QUESTION_TYPE.MULTIPLE_CHOICE? 'Multiple Choice' : 'Single Choice'}</td>
                                     <td>
-                                        <Link to={`/management/questions/${question.id}/edit`} className="btn btn-sm btn-success">Edit</Link>&nbsp;
-                                        <a className="btn btn-sm btn-success" onClick={() => this.showPreviewQuesiton(question.id)}>Preview</a>
+                                        <Link to={`/management/questions/${question.id}/edit`} className="btn btn-sm btn-primary">Edit</Link>&nbsp;
+                                        <a className="btn btn-sm btn-info" onClick={() => this.showPreviewQuesiton(question.id)}>Preview</a>
                                     </td>
                                 </tr>
                                 { preview_question_id == question.id &&
@@ -65,10 +67,10 @@ class QuestionManagement extends React.Component {
                                         </td>
                                     </tr>
                                 }
-                            </tbody>
+                            </React.Fragment>
                         )
                     })}
-                    {/* </tbody> */}
+                    </tbody>
                 </table>
                 
             </div>
@@ -76,5 +78,15 @@ class QuestionManagement extends React.Component {
     }
 }
 
+const breadcrumb_items = [
+    {
+        label: 'Management',
+        path: '#',
+    },
+    {
+        label: 'Questions',
+        active: true
+    }
+]
 
 export default withRouter(connect(null, null)(QuestionManagement));

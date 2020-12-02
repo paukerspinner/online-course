@@ -13,6 +13,21 @@ html {
     &:focus {
       outline: none;
     }
+    &:hover {
+      cursor: pointer !important;
+    }
+  }
+
+  .none-a {
+    text-decoration: none !important;
+    color: inherit;
+    &:focus {
+      outline: none;
+    }
+    &:hover {
+      cursor: pointer !important;
+      color: inherit;
+    }
   }
   
   // Main page wrapper

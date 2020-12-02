@@ -17,7 +17,7 @@ class CreateTestQuestionsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('test_id');
             $table->unsignedBigInteger('question_id');
-            $table->boolean('is_correct')->default(false);
+            $table->boolean('is_submited')->default(false);
             $table->foreign('test_id')->references('id')->on('tests')->onDelete('cascade');
             $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
             $table->timestamps();

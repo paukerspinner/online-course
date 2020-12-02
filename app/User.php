@@ -6,13 +6,14 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Config;
 
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
     protected $fillable = [
-       'email', 'name', 'surname', 'patronymic', 'role', 'verified', 'password',
+       'email', 'name', 'surname', 'patronymic', 'role', 'verified', 'password', 'level'
     ];
 
     protected $hidden = [

@@ -19,21 +19,12 @@ class TestController extends Controller
 
     public function store(Request $request)
     {
-        try {
-            $request_data = $request->json()->all();
-            $test = TestService::addNewTest($request_data);
-            return response()->json([
-                'message' => 'You have created a new test',
-                'test' => $test
-            ], 200);
-        } catch (Exception $e) {
-            return response()->json($e);
-        }
+        
     }
 
     public function show($id)
     {
-        //
+        
     }
 
     public function update(Request $request, $id)
@@ -46,27 +37,42 @@ class TestController extends Controller
         //
     }
 
-
-    // Make a new test or get the running test
-    public function makeTest() {
+    public function makeTest()
+    {
         $test = TestService::makeTest();
-        $time_remainning = TestService::calculateTimeRemainning($test);
 
-        if ($time_remainning <= 0) {
-            TestService::calculateScore($test->id);
-            return response()->json([
-                'error_message' => 'Your test was time out'
-            ], 403);
-        }
         return response()->json([
-            'time_remainning' => $time_remainning,
-            'questions' => $test->questions
+            'test' => $test
         ], 200);
     }
 
-    public function submitAnswers(Request $request) {
-        $selectedAnswers = $request->json()->get("answers");
-        TestService::checkAnswers($selectedAnswers);
-        return response()->json($selectedAnswers, 200);
+    public function myIndex() {
+        $tests = TestService::getMyTests();
+        return response()->json([
+            'tests' => $tests
+        ], 200);
+    }
+
+    public function showPendingTest()
+    {
+        $test = TestService::getPendingTest();
+        if ($test->started_at == null) {
+            TestService::setTestStarting($test->id);
+        }
+        $test_questions = TestService::getTestQuestions($test->id);
+        $time_remainning = TestService::calculateTimeRemainning($test->id);
+        return response()->json([
+            'test' => $test,
+            'test_questions' => $test_questions,
+            'time_remainning' => $time_remainning
+        ], 200);
+    }
+
+    public function finishPendingTest() {
+        $test = TestService::finishPendingTest();
+
+        return response()->json([
+            'message' => 'You finish this test at good level'
+        ], 200);
     }
 }

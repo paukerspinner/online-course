@@ -1,7 +1,7 @@
 import * as types from '../constants';
 
 let initial_state = {
-    is_logged: false,
+    is_logged: localStorage.getItem('access_token') && true,
     user: null,
     access_token: localStorage.getItem('access_token') || null
 }

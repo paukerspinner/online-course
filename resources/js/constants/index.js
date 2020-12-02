@@ -19,3 +19,15 @@ export const QUESTION_LEVEL = {
     MEDIUM: 1,
     HARD: 2
 }
+
+export const TEST_GRADE = {
+    PASS : 60,
+    GOOD : 80,
+    EXCELLENT : 90,
+}
+
+export const USER_LEVEL = {
+    PASS: 0,
+    GOOD: 1,
+    HARD: 2,
+}

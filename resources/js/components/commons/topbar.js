@@ -12,9 +12,8 @@ class Topbar extends React.Component {
                 </button>
                 <a href="/" className="nav-link topbar-logo">OCourse</a>
                 <ul className="navbar-nav">
-                    <li><a href="#course-target" className="nav-link">Target</a></li>
-                    <li><a href="#course-banner" className="nav-link">Course</a></li>
-                    <li><a href="#aboutus" className="nav-link">AboutUs</a></li>
+                    <li><Link to="/course" className="nav-link">Course</Link></li>
+                    <li><Link to="/course/progress" className="nav-link">Progress</Link></li>
                 </ul>
 
                 <ul className="navbar-nav ml-auto">

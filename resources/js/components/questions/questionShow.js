@@ -1,11 +1,6 @@
 import React from 'react';
 import { QUESTION_TYPE } from '../../constants';
 
-// interface Props {
-//     type: string,
-//     question: any
-// }
-
 class QuestionShow extends React.Component {
     constructor(props) {
         super(props);
@@ -20,7 +15,7 @@ class QuestionShow extends React.Component {
         return (
             <div className="card shadow mb-4">
                 <div className="card-header py-3">
-                    <h6 className="m-0 font-weight-bold text-primary">Question 1</h6>
+                    <h6 className="m-0 font-weight-bold text-primary">Question {question.id}</h6>
                 </div>
                 <div className="card-body">
                     <div dangerouslySetInnerHTML={{ __html: question.text }}></div>
@@ -29,7 +24,7 @@ class QuestionShow extends React.Component {
                             question.answers.map(answer => {
                             return (
                                 <div key={answer.id}>
-                                    <input type="radio" id={answer.id} name="answer" value={answer.id} onChange={this.handleSelectSingleChoice}/>&nbsp;
+                                    <input type="radio" id={answer.id} name="answer" value={answer.id} disabled checked={answer.is_correct}/>&nbsp;
                                     <label htmlFor={answer.id}>{answer.text}</label>
                                 </div>
                             )
@@ -38,7 +33,7 @@ class QuestionShow extends React.Component {
                             question.answers.map(answer => {
                             return (
                                 <div key={answer.id}>
-                                    <input type="checkbox" id={answer.id} name="answer" value={answer.id} onChange={this.handleSelectSingleChoice}/>&nbsp;
+                                    <input type="checkbox" id={answer.id} name="answer" value={answer.id} disabled checked={answer.is_correct}/>&nbsp;
                                     <label htmlFor={answer.id}>{answer.text}</label>
                                 </div>
                             )

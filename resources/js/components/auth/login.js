@@ -21,7 +21,7 @@ class Login extends React.Component {
     }
     handleSubmit(event) {
         API.login(this.state.email, this.state.password).then(res => {
-            this.props.history.push('/');
+            this.props.history.goBack();
             this.props.successLogin(res.data);
         }).catch(err => {
             this.setState({
@@ -33,6 +33,11 @@ class Login extends React.Component {
         event.preventDefault();
     }
     render() {
+        const { is_logged, history } = this.props;
+        if (is_logged) {
+            history.goBack();
+        }
+        
         return (
             <div className="container mt-0">
                 <div className="row justify-content-center">
@@ -98,4 +103,10 @@ const mapDispatchToProps = (dispatch, props) => {
     }
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(Login));
+const mapStateToProps = state => {
+    return {
+        is_logged: state.auth.is_logged
+    }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

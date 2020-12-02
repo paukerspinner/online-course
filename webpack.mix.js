@@ -12,6 +12,20 @@ const mix = require('laravel-mix');
  */
 
 mix.react('resources/js/index.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+    .sass('resources/sass/app.scss', 'public/css')
+    .webpackConfig({
+        module: {
+          rules: [
+            {
+              test: /\.tsx?$/,
+              loader: "ts-loader",
+              exclude: /node_modules/
+            }
+          ]
+        },
+        resolve: {
+          extensions: ["*", ".js", ".jsx", ".vue", ".ts", ".tsx"]
+        }
+      });
 
 mix.browserSync({proxy: '127.0.0.1:8000'});

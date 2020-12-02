@@ -26,10 +26,21 @@ Route::group(['prefix' => 'v1'], function() {
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
 
+    Route::get('users/up-level', 'UserController@requestUpLevel');
 
     Route::apiResource('questions', 'QuestionController');
     
     Route::get('tests/make-test', 'TestController@makeTest');
-    Route::post('tests/submit-answers', 'TestController@submitAnswers');
+    Route::get('tests/pending-test', 'TestController@showPendingTest');
+    Route::get('tests/my-tests', 'TestController@myIndex');
+    Route::get('tests/finish-test', 'TestController@finishPendingTest');
     Route::apiResource('tests', 'TestController');
+
+    Route::apiResource('test-answers', 'TestAnswerController');
+
+    Route::apiResource('/sections', 'SectionController');
+
+    Route::get('/materials/recommended-materials', 'MaterialController@getRecommendedMaterials');
+    Route::post('/materials/update', 'MaterialController@update');
+    Route::apiResource('/materials', 'MaterialController');
 });

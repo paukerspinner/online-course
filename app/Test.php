@@ -3,10 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Config;
 
 class Test extends Model
 {
-    protected $fillable = ['user_id', 'section_id', 'level', 'grade'];
+    protected $fillable = ['user_id', 'section_id', 'level', 'grade', 'started_at', 'finished_at'];
+    protected $hidden = ['created_at', 'updated_at'];
+    protected $appends = ['completion_time'];
 
     public function testQuestions() {
         return $this->hasMany('App\TestQuestion', 'test_id');
@@ -23,9 +26,9 @@ class Test extends Model
     public function getCompletionTimeAttribute() {
         $is_exam = $this->section->is_exam;
         if ($is_exam) {
-            return 60;
+            return 60*60;
         } else {
-            return 20;
+            return 60*60;
         }
     }
 }

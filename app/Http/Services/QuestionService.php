@@ -10,7 +10,8 @@ class QuestionService
         $new_question = Question::create([
             'text' => $question_fields['text'],
             'level' => $question_fields['level'],
-            'type' => $question_fields['type']
+            'type' => $question_fields['type'],
+            'section_id' => $question_fields['section_id']
         ]);
         return $new_question;
     }
@@ -30,7 +31,8 @@ class QuestionService
         $question->update([
             'text' => $question_fields['text'],
             'level' => $question_fields['level'],
-            'type' => $question_fields['type']
+            'type' => $question_fields['type'],
+            'section_id' => $question_fields['section_id']
         ]);
         return $question;
     }

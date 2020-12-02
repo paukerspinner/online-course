@@ -58,7 +58,8 @@ class QuestionForm extends React.Component {
                 {
                     text: '', is_correct: false
                 }
-            ]
+            ],
+            sections: []
         }
         this.handleOnChangeEditor = this.handleOnChangeEditor.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -72,7 +73,7 @@ class QuestionForm extends React.Component {
         const question_id = parseInt(this.props.match.params.id);
         if (this.props.type == 'edit') {
             API.getQuestion(question_id).then(res => {
-                let question = Object.assign({}, res.data, {answers: undefined});
+                let question = Object.assign({}, res.data, { answers: undefined });
                 this.setState({
                     question,
                     answers: res.data.answers,
@@ -80,6 +81,12 @@ class QuestionForm extends React.Component {
                 })
             }).catch(err => console.log(err.response))
         }
+
+        API.getSections().then(res => {
+            this.setState({
+                sections: res.data
+            })
+        })
     }
 
     handleChangeDataQuestion(event) {
@@ -179,10 +186,24 @@ class QuestionForm extends React.Component {
     }
 
     render() {
-        const { editorState, question, answers } = this.state;
+        const { editorState, question, answers, sections } = this.state;
         return (
-            <div className="container">
+            <div>
                 <form onSubmit={this.handleSubmit}>
+                    <div className="form-group">
+                        <label htmlFor="question_level">Question Module</label>
+                        <select name="section_id" className="form-control shadow" id="question_section" value={question.section_id} onChange={this.handleChangeDataQuestion}>
+                            {
+                                sections.map(section => {
+                                    if (!section.is_exam) {
+                                        return (
+                                            <option value={section.id} key={section.id}>{section.title}</option>
+                                        )
+                                    }
+                                })
+                            }
+                        </select>
+                    </div>
                     <div className="form-group">
                         <label htmlFor="question_level">Question Level</label>
                         <select name="level" className="form-control shadow" id="question_level" value={question.level} onChange={this.handleChangeDataQuestion}>
@@ -242,10 +263,10 @@ class QuestionForm extends React.Component {
                             <div className="col-12">
                                 <label htmlFor="Option4">Answer</label>
                             </div>
-                            {[0,1,2,3].map(value => {
-                                return(
+                            {[0, 1, 2, 3].map(value => {
+                                return (
                                     <div className="col-md-3 col-sm-6" key={value}>
-                                        <input type="checkbox" id={`select${value}`} name="multichoice_select1" value={value} onChange={this.handleSelectMultipleChoice} checked={answers[value].is_correct}/>&nbsp;
+                                        <input type="checkbox" id={`select${value}`} name="multichoice_select1" value={value} onChange={this.handleSelectMultipleChoice} checked={answers[value].is_correct} />&nbsp;
                                         <label htmlFor={`select${value}`}>Option {value + 1}</label>
                                     </div>
                                 )

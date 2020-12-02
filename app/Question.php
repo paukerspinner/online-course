@@ -8,6 +8,8 @@ class Question extends Model
 {
     protected $fillable = ['id', 'text', 'type', 'level', 'section_id'];
 
+    protected $hidden = ['created_at', 'updated_at'];
+
     protected $with = ['answers'];
 
     function answers() {
