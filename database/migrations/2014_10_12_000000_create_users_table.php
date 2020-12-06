@@ -19,9 +19,10 @@ class CreateUsersTable extends Migration
             $table->string('name', 255);
             $table->string('surname', 255);
             $table->string('patronymic', 255)->nullable();
-            $table->string('role', 255)->default('user');
+            $table->string('role', 255)->default('student');
             $table->boolean('verified')->default(false);
-            $table->tinyInteger('level')->nullable();
+            $table->tinyInteger('level')->default(2);   // default value is max level
+            $table->boolean('completed_course')->default(false);
             $table->string('password');
             $table->timestamps();
         });

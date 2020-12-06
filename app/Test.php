@@ -23,12 +23,15 @@ class Test extends Model
         return $this->belongsTo('App\Section', 'section_id');
     }
 
+    public function getIsExamAttribute() {
+        return $this->section->is_exam;
+    }
+
     public function getCompletionTimeAttribute() {
-        $is_exam = $this->section->is_exam;
-        if ($is_exam) {
+        if ($this->is_exam) {
             return 60*60;
         } else {
-            return 60*60;
+            return 15*60;
         }
     }
 }

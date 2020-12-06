@@ -21,7 +21,7 @@ class QuestionSeeder extends Seeder
         //     'level' => 1
         // ]);
 
-        for ($i = 1; $i <= 9 * 30; $i++) {
+        for ($i = 1; $i <= 8 * 30; $i++) {
             Question::create([
                 'id' => $i,
                 'section_id' => floor(($i-1)/30) + 1,

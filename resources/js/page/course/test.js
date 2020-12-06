@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { store } from '../../';
+import * as actions from '../../actions';
 import { withRouter, Link } from 'react-router-dom';
 import * as API from '../../ulties/api';
 import BreadCrumb from '../../components/commons/breadcrumb';
@@ -20,7 +22,14 @@ class TestPage extends React.Component {
             this.setState({
                 test: res.data.test
             });
-        }).catch(err => console.log(err.response))
+        }).catch(err => {
+            if (err.response.status == 403) {
+                store.dispatch(actions.setFlassMessage(err.response.data.message_error, 'warning'))
+                this.props.history.push('/course/progress');
+            } else {
+                store.dispatch(actions.setFlassMessage('Have something wrong!', 'danger'))
+            }
+        })
     }
 
     render() {
@@ -30,7 +39,7 @@ class TestPage extends React.Component {
         return (
             <div className="container mt-4">
                 <BreadCrumb breadcrumb_items={breadcrumb_items} />
-                <div className="row mt-2">
+                <div className="row mt-4">
                     <div className="col">
                         <div className="card shadow mb-4">
                             <div className="card-header bg-primary py-3">

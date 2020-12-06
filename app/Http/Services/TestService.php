@@ -9,6 +9,7 @@ use App\User;
 use Carbon\Carbon;
 use App\Answer;
 use App\Http\Services\UserService;
+use App\Http\Services\TestQuestionService;
 use Config;
 
 class TestService
@@ -17,8 +18,13 @@ class TestService
         return Test::all();
     }
 
-    public static function getMyTests() {
-        return Test::where('user_id', auth()->user()->id)->orderBy('updated_at', 'DESC')->get();
+    public static function getCompletedTestsOfUser($user) {
+        return $user->tests()->where('grade', '!=', null)->orderBy('updated_at', 'DESC')->get();
+
+        return Test::where([
+            ['user_id', auth()->user()->id],
+            ['grade', '!=', null]
+        ])->orderBy('updated_at', 'DESC')->get();
     }
 
     public static function makeTest() {
@@ -33,26 +39,11 @@ class TestService
             'section_id' => $current_section_id,
             'level' => auth()->user()->level
         ]);
-        try {
-            $question_bank = Question::where([['level', $new_test->level], ['section_id', $new_test->section_id]])->get()->map->only('id')->all();
-            
-            $selectedQuestions = (new static)::getRandomQuestionsFromBank($question_bank, Config::get('constants.QUESTION_NUMBER'));
-            foreach ($selectedQuestions as $question) {
-                $test_question = TestQuestion::create([
-                    'test_id' => $new_test->id,
-                    'question_id' => $question['id']
-                ]);
 
-                $answers = Question::find($question['id'])->answers;
-                foreach ($answers as $answer) {
-                    TestAnswer::create([
-                        'answer_id' => $answer->id,
-                        'test_question_id' => $test_question->id
-                    ]);
-                }
-            }
-        } catch (Exception $e) {
-            Test::find($new_test->id)->delete();
+        if ($new_test->is_exam) {
+            TestQuestionService::createTestQuestionForExam($new_test);
+        } else {
+            TestQuestionService::createTestQuestionsForTest($new_test);
         }
 
         return $new_test;
@@ -66,6 +57,9 @@ class TestService
             'grade' => $grade,
             'finished_at' => Carbon::now()
         ]);
+        if ($pending_test->is_exam && $pending_test->grade >= Config::get('constants.GRADD_PASS')) {
+            auth()->user()->update(['completed_course' => true]);
+        }
         return $pending_test;
     }
 
@@ -100,14 +94,8 @@ class TestService
     public static function setTestStarting($test_id) {
         $test = Test::find($test_id);
         $test->update([
-            'started_at' => Carbon::now()//->toDateTimeString()
+            'started_at' => Carbon::now()
         ]);
-    }
-
-    public static function getTestQuestions($test_id) {
-        $test_questions = Test::find($test_id)->testQuestions()->get();
-
-        return $test_questions;
     }
 
     public static function getCurrentSectionId() {
@@ -120,13 +108,14 @@ class TestService
         }
     }
 
-    protected static function getRandomQuestionsFromBank($question_bank, $required_number) {
-        $question_bank_size = count($question_bank);
-        $selectedQuestions = [];
-        for ($i = 0; $i < $required_number; $i++) {
-            shuffle($question_bank);
-            $selectedQuestions[] = array_pop($question_bank);
+    public static function getFactorGradeOfLevel($test_level) {
+        switch($test_level) {
+            case Config::get('constants.EASY_LEVEL'):
+                return Config::get('constants.GRADE_FACTOR_EASY_LEVEL');
+            case Config::get('constants.MEDIUM_LEVEL'):
+                return Config::get('constants.GRADE_FACTOR_MEDIUM_LEVEL');
+            default:
+                return 1;
         }
-        return $selectedQuestions;
     }
 }

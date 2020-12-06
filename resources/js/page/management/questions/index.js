@@ -6,7 +6,7 @@ import { QUESTION_LEVEL, QUESTION_TYPE } from '../../../constants';
 import QuestionShow from '../../../components/questions/questionShow';
 import BreadCrumb from '../../../components/commons/breadcrumb';
 
-class QuestionManagement extends React.Component {
+class QuestionsManagementPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -89,4 +89,4 @@ const breadcrumb_items = [
     }
 ]
 
-export default withRouter(connect(null, null)(QuestionManagement));
+export default withRouter(connect(null, null)(QuestionsManagementPage));

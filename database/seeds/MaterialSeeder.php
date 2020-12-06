@@ -12,7 +12,7 @@ class MaterialSeeder extends Seeder
      */
     public function run()
     {
-        for($i = 1; $i < 10; $i++) {
+        for($i = 1; $i < 9; $i++) {
             Material::create([
                 'section_id' => $i,
                 'title' => "Material module $i - easy level",

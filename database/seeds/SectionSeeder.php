@@ -12,7 +12,7 @@ class SectionSeeder extends Seeder
      */
     public function run()
     {
-        for($i = 1; $i < 10; $i++) {
+        for($i = 1; $i < 9; $i++) {
             Section::create([
                 'id' => $i,
                 'title' => "Module $i",
@@ -20,7 +20,7 @@ class SectionSeeder extends Seeder
             ]);
         }
         Section::create([
-            'id' => 10,
+            'id' => 9,
             'title' => "Final exam",
             'is_exam' => true
         ]);

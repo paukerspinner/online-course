@@ -1,24 +1,30 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import * as API from '../../ulties/api';
 import { QUESTION_LEVEL as TEST_LEVEL, TEST_GRADE, USER_LEVEL } from '../../constants';
+import * as actions from '../../actions';
+import { store } from '../..';
+import TestResult from '../../components/test/testResult';
 import BreadCrumb from '../../components/commons/breadcrumb';
+import Transcript from '../../components/user/transcript';
 
 class ProgressPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            test: {},
-            recommended_materials: []
+            tests: [],
+            recommended_materials: [],
+            myself: {}
         }
         this.getRecommendedMaterials = this.getRecommendedMaterials.bind(this);
         this.getTest = this.getTest.bind(this);
         this.requestUpLevel = this.requestUpLevel.bind(this);
+        this.getMyself = this.getMyself.bind(this);
     }
     componentDidMount() {
         this.getTest();
         this.getRecommendedMaterials();
+        this.getMyself();
     }
     getTest() {
         API.getMyTests().then(res => {
@@ -28,6 +34,13 @@ class ProgressPage extends React.Component {
             console.log(res.data.tests)
         }).catch(err => {
             console.log(err.response)
+        })
+    }
+
+    getMyself() {
+        API.getMyself().then(res => {
+            this.setState({ myself: res.data.user });
+            console.log(res.data)
         })
     }
 
@@ -43,22 +56,25 @@ class ProgressPage extends React.Component {
     requestUpLevel() {
         if (confirm('You sure to upgrade level')) {
             API.requestUpLevel().then(res => {
-                    console.log(res.data.message)
+                store.dispatch(actions.setFlassMessage(res.data.message));
+                this.getRecommendedMaterials();
             }).catch(err => {
-                console.log(err.response.data.message_error)
+                if (err.response.status == 403) {
+                    store.dispatch(actions.setFlassMessage(err.response.data.message_error, 'warning'))
+                }
             })
         }
     }
 
     render() {
-        const { tests, recommended_materials } = this.state;
+        const { tests, recommended_materials, myself } = this.state;
         return (
             <div className="container mt-4">
                 <BreadCrumb breadcrumb_items={breadcrumb_items} />
                 <div className="row">
-                    <div className="col-lg-4 mt-4">
-                        {
-                            recommended_materials.length &&
+                    {
+                        recommended_materials.length ?
+                        (<div className="col mt-4">
                             <div className="card shadow">
                                 <div className="card-header bg-primary">
                                     <h5 className="m-0 font-weight-bold text-light">
@@ -69,7 +85,7 @@ class ProgressPage extends React.Component {
                                     <div>
                                         <p className="m-0">Your level: {renderUserLevel(recommended_materials[0].level)}</p>
                                         <a className="" onClick={this.requestUpLevel}>Request up level {'>>'}</a>
-                                    </div><hr/>
+                                    </div><hr />
                                     <div>
                                         <span className="">Recommended materials:</span>
                                     </div>
@@ -92,9 +108,14 @@ class ProgressPage extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                        }
+                        </div>) : null
+                    }
+                </div>
+                <div className="row">
+                    <div className="col-lg-4 mt-4">
+                        <Transcript transcript={myself.transcript} fullname={[myself.surname, myself.name, myself.patronymic].join(' ')}/>
                     </div>
-                    <div className="col-lg-8 mt-4">
+                    <div className="col mt-4">
                         <div className="card shadow">
                             <div className="card-header bg-primary">
                                 <h5 className="m-0 font-weight-bold text-light">
@@ -103,38 +124,14 @@ class ProgressPage extends React.Component {
                             </div>
                             <div className="card-body">
                                 {
-                                    tests && tests.map(test => {
+                                    tests.length ? tests.map((test, idx) => {
                                         return (
-                                            <div className="row no-gutters align-items-center" key={test.id}>
-                                                <div className="col mr-2">
-                                                    <div className="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                                        <span>{test.section.title} - </span>
-                                                        <span>
-                                                            {renderTestLevel(test.level)}
-                                                        </span>
-                                                    </div>
-                                                    <div className="row no-gutters align-items-center">
-                                                        <div className="col-3">
-                                                            <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                                                                {test.grade || 0}%
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-9">
-                                                            <div className="progress progress-sm mr-2">
-                                                                <div className={test.grade >= TEST_GRADE.PASS ? 'progress-bar bg-success' : 'progress-bar bg-warning'} role="progressbar"
-                                                                    style={{ width: `${test.grade}%` }} aria-valuenow={50} aria-valuemin={0}
-                                                                    aria-valuemax={100}></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <hr/>
-                                                </div>
-                                                <div className="col-auto">
-                                                    <i className="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                                                </div>
+                                            <div key={test.id}>
+                                                <TestResult test={test} />
+                                                { tests[idx+1] != undefined && test.section_id != tests[idx+1].section_id ? (<hr/>) : (<br/>) }
                                             </div>
                                         )
-                                    })
+                                    }) : 'Student has not completed any test.'
                                 }
                             </div>
                         </div>
@@ -182,4 +179,4 @@ const breadcrumb_items = [
     }
 ]
 
-export default withRouter(connect(null, null)(ProgressPage));
+export default withRouter(ProgressPage);

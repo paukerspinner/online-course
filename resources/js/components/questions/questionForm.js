@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { store } from '../../';
+import * as actions from '../../actions';
 import { EditorState, convertToRaw, ContentState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
@@ -43,7 +44,8 @@ class QuestionForm extends React.Component {
             question: {
                 text: null,
                 type: QUESTION_TYPE.SINGLE_CHOICE,
-                level: QUESTION_LEVEL.MEDIUM
+                level: QUESTION_LEVEL.MEDIUM,
+                section_id: 1
             },
             answers: [
                 {
@@ -145,17 +147,18 @@ class QuestionForm extends React.Component {
             API.addNewQuestion(question, answers).then(res => {
                 this.resetData();
                 this.props.history.push(`/management/questions/${res.data.question.id}`);
+                store.dispatch(actions.setFlassMessage(res.data.message))
             }).catch(err => {
-                console.log(err.response)
+                store.dispatch(actions.setFlassMessage('Have something wrong. Please try again'));
             });
         } else if (this.props.type == 'edit') {
             const question_id = parseInt(this.props.match.params.id);
             API.editQuestion(question, answers, question_id).then(res => {
                 this.resetData();
                 this.props.history.push(`/management/questions/${question_id}`);
-                console.log(res.data)
+                store.dispatch(actions.setFlassMessage(res.data.message))
             }).catch(err => {
-                console.log(err.response);
+                store.dispatch(actions.setFlassMessage('Have something wrong. Please try again'));
             })
         }
     }

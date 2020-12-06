@@ -14,6 +14,7 @@ class Topbar extends React.Component {
                 <ul className="navbar-nav">
                     <li><Link to="/course" className="nav-link">Course</Link></li>
                     <li><Link to="/course/progress" className="nav-link">Progress</Link></li>
+                    <li><Link to="/blog" className="nav-link">Blog</Link></li>
                 </ul>
 
                 <ul className="navbar-nav ml-auto">

@@ -4,15 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Services\UserService;
+use App\User;
 
 class UserController extends Controller
 {
     public function __construct() {
         $this->middleware('auth:api');
+        $this->middleware('role:admin')->except(['requestUpLevel', 'myself']);
     }
-    public function index()
+
+    public function index(Request $request)
     {
-        //
+        $filter_request = $request->all();
+        return response()->json([
+            'users' => UserService::getUsers($filter_request)
+        ], 200);
     }
     
     public function store(Request $request)
@@ -22,7 +28,10 @@ class UserController extends Controller
     
     public function show($id)
     {
-        //
+        $user = User::find($id)->setAppends(['transcript']);
+        return response()->json([
+            'user' => $user
+        ], 200);
     }
     
     public function update(Request $request, $id)
@@ -46,5 +55,9 @@ class UserController extends Controller
                 'message_error' => 'Your request have been fail processed. Your level was maximum'
             ], 403);
         }
+    }
+
+    public function myself() {
+        return $this->show(auth()->user()->id);
     }
 }

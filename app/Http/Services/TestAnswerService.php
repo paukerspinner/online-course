@@ -38,4 +38,14 @@ class TestAnswerService
             return false;
         }
     }
+
+    public static function createTestAnswerForTestQuestion($test_question) {
+        $answers = $test_question->question()->getResults()->answers;
+        foreach($answers as $answer) {
+            TestAnswer::create([
+                'answer_id' => $answer->id,
+                'test_question_id' => $test_question->id
+            ]);
+        }
+    }
 }

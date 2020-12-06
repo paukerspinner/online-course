@@ -8,6 +8,7 @@ import Topbar from './components/commons/topbar';
 import Sidebar from './components/commons/sidebar';
 import Footer from './components/commons/footer';
 import AuthRoute from './components/auth/authRoute';
+import FlassMessage from './components/commons/flassMessage';
 
 import Login from './components/auth/login';
 import Register from './components/auth/register';
@@ -16,15 +17,18 @@ import HomePage from './page/homePage';
 import NotFoundPage from './page/notFound';
 import QuesitonCreatePage from './page/management/questions/create';
 import QuestionEditPage from './page/management/questions/edit';
-import QuestionManagement from './page/management/questions'
+import QuestionsManagementPage from './page/management/questions'
 import CoursePage from './page/course';
 import TestPage from './page/course/test';
 import TestingPage from './page/course/testing';
 import ProgressPage from './page/course/progress';
-import MaterialManagement from './page/management/materials';
+import MaterialsManagementPage from './page/management/materials';
 import MaterialCreatePage from './page/management/materials/create';
 import MaterialEditPage from './page/management/materials/edit';
-
+import BlogPage from './page/blog';
+import StudentsManagemntPage from './page/management/students';
+import StudentResultPage from './page/management/students/result';
+import UsersManagementPage from './page/management/users';
 // import for testing
 // import NotFoundPage from './page/notFound';
 //
@@ -40,7 +44,7 @@ class App extends React.Component {
         })
     }
     render() {
-        const { is_logged, is_admin } = this.props;
+        const { is_logged, is_admin, flassMessage } = this.props;
         return (
             <div id="page-top">
                 <div id="wrapper">
@@ -59,15 +63,19 @@ class App extends React.Component {
                                     <AuthRoute path="/course/test" exact component={TestPage}/>
                                     <AuthRoute path="/course/testing" exact component={TestingPage}/>
                                     <AuthRoute path="/course/progress" exact component={ProgressPage}/>
+                                    <AuthRoute path="/blog" exact component={BlogPage} />
 
                                     {is_admin && 
                                         (<Switch>
                                             <Route path="/management/questions/create" exact component={QuesitonCreatePage} />
-                                            <Route path="/management/questions/:id?" exact component={QuestionManagement} />
+                                            <Route path="/management/questions/:id?" exact component={QuestionsManagementPage} />
                                             <Route path="/management/questions/:id/edit" exact component={QuestionEditPage}/>
-                                            <Route path="/management/materials" exact component={MaterialManagement} />
+                                            <Route path="/management/materials" exact component={MaterialsManagementPage} />
                                             <Route path="/management/materials/create" exact component={MaterialCreatePage} />
                                             <Route path="/management/materials/:id/edit" exact component={MaterialEditPage} />
+                                            <Route path="/management/students" exact component={StudentsManagemntPage} />
+                                            <Route path="/management/users" exact component={UsersManagementPage} />
+                                            <Route path="/management/users/:user_id/result" exact component={StudentResultPage} />
                                         </Switch>)
                                     }
                                     <Route>
@@ -78,6 +86,7 @@ class App extends React.Component {
                             </div>
                         </div>
                         <Footer/>
+                        <FlassMessage flassMessage={flassMessage}/>
                     </div>
                 </div>
             </div>
@@ -88,7 +97,8 @@ class App extends React.Component {
 const mapStateToProps = state => {
     return {
         is_admin: state.auth.user && state.auth.user.role == 'admin',
-        is_logged: state.auth.is_logged
+        is_logged: state.auth.is_logged,
+        flassMessage: state.flassMessage,
     }
 }
 

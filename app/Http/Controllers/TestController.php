@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Services\TestService;
+use App\Http\Services\TestQuestionService;
 
 class TestController extends Controller
 {
@@ -39,6 +40,11 @@ class TestController extends Controller
 
     public function makeTest()
     {
+        if (auth()->user()->completed_course) {
+            return response()->json([
+                'message_error' => 'You have completed the course'
+            ], 403);
+        }
         $test = TestService::makeTest();
 
         return response()->json([
@@ -47,7 +53,7 @@ class TestController extends Controller
     }
 
     public function myIndex() {
-        $tests = TestService::getMyTests();
+        $tests = TestService::getCompletedTestsOfUser(auth()->user());
         return response()->json([
             'tests' => $tests
         ], 200);
@@ -59,7 +65,7 @@ class TestController extends Controller
         if ($test->started_at == null) {
             TestService::setTestStarting($test->id);
         }
-        $test_questions = TestService::getTestQuestions($test->id);
+        $test_questions = TestQuestionService::getTestQuestionOfTest($test);
         $time_remainning = TestService::calculateTimeRemainning($test->id);
         return response()->json([
             'test' => $test,

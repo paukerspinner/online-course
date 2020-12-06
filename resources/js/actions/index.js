@@ -40,3 +40,16 @@ export const failureCheckToken = payload => {
         payload
     }
 }
+
+export const setFlassMessage = (content, status, duration) => {
+    return {
+        type: types.SET_FLASS_MESSAGE,
+        payload: { content, status, duration }
+    }
+}
+
+export const freeFlashMessage = () => {
+    return {
+        type: types.FREE_FLASH_MESSAGE
+    }
+}

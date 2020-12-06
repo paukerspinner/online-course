@@ -27,6 +27,10 @@ Route::group(['prefix' => 'v1'], function() {
     Route::post('me', 'AuthController@me');
 
     Route::get('users/up-level', 'UserController@requestUpLevel');
+    Route::get('users/myself', 'UserController@myself');
+    Route::apiResource('users', 'UserController');
+
+    Route::apiResource('users/{id}/tests', 'UserTestController');
 
     Route::apiResource('questions', 'QuestionController');
     
@@ -43,4 +47,6 @@ Route::group(['prefix' => 'v1'], function() {
     Route::get('/materials/recommended-materials', 'MaterialController@getRecommendedMaterials');
     Route::post('/materials/update', 'MaterialController@update');
     Route::apiResource('/materials', 'MaterialController');
+
+    Route::apiResource('/blogs', 'BlogController');
 });

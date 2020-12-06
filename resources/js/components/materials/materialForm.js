@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { store } from '../../';
+import * as actions from '../../actions';
 import * as API from '../../ulties/api';
 import { QUESTION_LEVEL as MATERIAL_LEVEL } from '../../constants';
 
@@ -60,6 +62,7 @@ class MaterialForm extends React.Component {
         // Form Data suports only 2 types: text or file)
         if (this.props.type == 'create') {
             API.addMaterial(marerial_data_form).then(res => {
+                store.dispatch(actions.setFlassMessage(res.data.message));
                 this.props.history.push('/management/materials');
             }).catch(err => {
                 console.log(err.response);
@@ -68,6 +71,7 @@ class MaterialForm extends React.Component {
             let id = this.props.match.params.id;
             marerial_data_form.append('id', id);
             API.updateMaterial(marerial_data_form).then(res => {
+                store.dispatch(actions.setFlassMessage(res.data.message));
                 this.props.history.push('/management/materials');
             }).catch(err => {
                 console.log(err.response);

@@ -5,7 +5,7 @@ import * as API from '../../../ulties/api';
 import BreadCrumb from '../../../components/commons/breadcrumb';
 import { QUESTION_LEVEL as MATERIAL_LEVEL } from '../../../constants';
 
-class MaterialManagement extends React.Component {
+class MaterialsManagementPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -88,4 +88,4 @@ const renderMaterialLevel = material_level => {
     }
 }
 
-export default withRouter(connect(null, null)(MaterialManagement));
+export default withRouter(connect(null, null)(MaterialsManagementPage));

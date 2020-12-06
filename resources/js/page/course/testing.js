@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { store } from '../../';
+import * as actions from '../../actions';
 import { withRouter } from 'react-router-dom';
 import * as API from '../../ulties/api';
 import QuestionTestForm from '../../components/questions/questionTestForm';
@@ -33,7 +35,9 @@ class TestingPage extends React.Component {
                 time_remainning: res.data.time_remainning
             })
             this.timming();
-            console.log(res.data)
+        }).catch(err => {
+            store.dispatch(actions.setFlassMessage('Have something wrong!', 'danger'));
+            this.props.history.push('/course/test');
         })
     }
 
@@ -67,19 +71,19 @@ class TestingPage extends React.Component {
         return (
             <div className="container mt-4">
                 <BreadCrumb breadcrumb_items={breadcrumb_items} />
-                <div className="d-flex card shadow bg-primary text-white p-2">
+                <div className="d-flex card shadow bg-primary text-white p-2 mt-4">
                     <h3 className="m-auto pb-2">{title}</h3>
                     <h3 className="m-auto">{renderTime(time_remainning)}</h3>
                 </div>
                 <div className="row mt-2">
-                    {   test_questions.length && 
+                    {   test_questions.length ? 
                         test_questions.map((test_question, idx) => {
                             return (
                                 <div className="col-lg-12" key={idx}>
                                     <QuestionTestForm test_question={test_question} idx={idx} />
                                 </div>
                             )
-                        })
+                        }) : null
                     }
                 </div>
                 <div className="text-center">

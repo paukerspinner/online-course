@@ -209,3 +209,58 @@ export const getRecommendedMaterials = () => {
         })
     })
 }
+
+export const getBlogs = () => {
+    Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
+    return new Promise((resolve, reject) => {
+        Axios.get('/api/v1/blogs').then(res => {
+            resolve(res);
+        }).catch(err => {
+            reject(err);
+        })
+    })
+}
+
+export const getUsers = filter_conditions => {
+    Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
+    return new Promise((resolve, reject) => {
+        Axios.get('/api/v1/users', { params: filter_conditions}).then(res => {
+            resolve(res);
+        }).catch(err => {
+            reject(err);
+        })
+    })
+}
+
+export const getUser = user_id => {
+    Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
+    return new Promise((resolve, reject) => {
+        Axios.get(`/api/v1/users/${user_id}`).then(res => {
+            resolve(res);
+        }).catch(err => {
+            reject(err);
+        })
+    })
+}
+
+export const getMyself = () => {
+    Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
+    return new Promise((resolve, reject) => {
+        Axios.get('/api/v1/users/myself').then(res => {
+            resolve(res);
+        }).catch(err => {
+            reject(err);
+        })
+    })
+}
+
+export const getTestsOfUser = user_id => {
+    Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
+    return new Promise((resolve, reject) => {
+        Axios.get(`/api/v1/users/${user_id}/tests`).then(res => {
+            resolve(res);
+        }).catch(err => {
+            reject(err);
+        })
+    })
+}
