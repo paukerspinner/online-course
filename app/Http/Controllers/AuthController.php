@@ -11,6 +11,8 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Services\AuthService;
 
+use App\Http\Resources\User\UserResource;
+
 class AuthController extends Controller
 {
     public function __construct() {
@@ -22,7 +24,7 @@ class AuthController extends Controller
         if ($token = JWTAuth::attempt($credentials)) {
             return response()->json([
                 'access_token' => $token,
-                'user' => auth()->user()
+                'user' => new UserResource(auth()->user())
             ]);
         }
         return response()->json(['error_message' => 'Email or password is not correct'], 401);
@@ -30,7 +32,7 @@ class AuthController extends Controller
 
     public function register(Request $request) {
         try {
-            $validator = Validator::make($request->json()->all(), [
+            $validator = Validator::make($request->all(), [
                 'email' => ['required', 'email', 'unique:users'],
                 'name' => ['required', 'string', 'max:255'],
                 'surname' => ['required', 'string', 'max:255'],
@@ -38,10 +40,11 @@ class AuthController extends Controller
                 'password' => ['required', 'string', 'min:8'],
                 'confirm' => ['required', 'same:password']
             ]);
+            
             if($validator->fails()){
                 return response()->json($validator->errors(), 400);
             }
-            $registration_data = $request->json()->all();
+            $registration_data = $request->all();
             $user = AuthService::registerUser($registration_data);
             
             $token = JWTAuth::fromUser($user);
@@ -81,11 +84,12 @@ class AuthController extends Controller
     }
 
     public function me() {
-        return response()->json($this->guard()->user());
+        return response()->json(new UserResource(auth()->user()));
     }
 
     public function logout() {
-        $this->response()->json(['message' => 'Successfully logged out']);
+        auth()->logout();
+        return response()->json(['message' => 'Successfully logged out']);
     }
 
     public function refresh() {

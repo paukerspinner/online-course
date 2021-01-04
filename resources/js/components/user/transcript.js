@@ -4,14 +4,14 @@ class Transcript extends React.Component {
     render() {
         const { transcript, fullname } = this.props;
         return (
-            <div className="card shadow">
+            <div className="card-bt hover-shadow">
                 <div className="card-header bg-primary">
                     <h5 className="m-0 font-weight-bold text-light">
                         Transcript
                     </h5>
                 </div>
                 <div className="card-body">
-                    <strong>Student: </strong><span>{ fullname }</span>
+                    <span>Student: </span><b>{ fullname }</b>
                     <table className="table table-hover mt-4 text-center">
                         <thead>
                             <tr>
@@ -51,9 +51,10 @@ class Transcript extends React.Component {
 }
 
 const calculateTranscript = transcript => {
-    return transcript.reduce((result, section_rating) => {
+    let score = transcript.reduce((result, section_rating) => {
         return result + section_rating.rating
     }, 0);
+    return Math.round(score*100)/100;
 }
 
 export default Transcript;

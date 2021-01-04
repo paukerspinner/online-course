@@ -3,9 +3,11 @@
 
 $body-bg-color: #e8f1fc;
 $body-text-color: #3b5064;
+$body-text-color: #000000;
+
 
 // Typography
-$font-family-sans-serif: 'Nunito', sans-serif;
+$font-family-sans-serif: 'Open Sans', sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
@@ -56,13 +58,13 @@ $brand-facebook: #3b5998 !default;
 $yiq-contrasted-threshold: 195 !default;
 
 // Typography
-$body-color: $gray-600 !default;
+// $body-color: $gray-600 !default;
 
 //Sidebar
 // Spacing Variables
 // Change below variable if the height of the navbar changes
 $topbar-base-height: 4.375rem !default;
 // Change below variable to change the width of the sidenav
-$sidebar-base-width: 14rem !default;
+$sidebar-base-width: 12rem !default;
 // Change below variable to change the width of the sidenav when collapsed
 $sidebar-collapsed-width: 6.5rem !default;

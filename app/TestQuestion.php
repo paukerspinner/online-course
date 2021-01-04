@@ -8,7 +8,7 @@ class TestQuestion extends Model
 {
     protected $fillable = ['test_id', 'question_id', 'is_submited'];
     protected $hidden = ['created_at', 'updated_at'];
-    protected $appends = ['text', 'type'];
+    protected $appends = ['text', 'type', 'section_id'];
     protected $with = ['testAnswers'];
     protected $casts = [
         'is_correct' => 'boolean',
@@ -17,6 +17,10 @@ class TestQuestion extends Model
 
     public function question() {
         return $this->belongsTo('App\Question');
+    }
+
+    public function getSectionIdAttribute() {
+        return $this->question()->getResults()->section_id;
     }
 
     public function getTextAttribute() {
@@ -35,7 +39,7 @@ class TestQuestion extends Model
         if ($this->is_submited != true) return false;
         $test_answers = $this->testAnswers()->getResults();        
         foreach ($test_answers as $test_answer) {
-            if ($test_answer->is_selected != $test_answer->is_corrected && $test_answer->is_corrected != NULL) {
+            if ($test_answer->is_selected != $test_answer->is_corrected && $test_answer->is_corrected !== NULL) {
                 return false;
             }
         }

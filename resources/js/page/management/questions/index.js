@@ -35,7 +35,9 @@ class QuestionsManagementPage extends React.Component {
         return (
             <div className="container mt-4">
                 <BreadCrumb breadcrumb_items={breadcrumb_items}/>
-                <Link to="/management/questions/create" className="btn btn-primary mt-4">Create New Question</Link>
+                <div className="text-right">
+                    <Link to="/management/questions/create" className="btn btn-primary mt-4">Create New Question</Link>
+                </div>
                 <table className="table table-hover mt-4">
                     <thead>
                         <tr className="text-center">

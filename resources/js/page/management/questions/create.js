@@ -7,7 +7,11 @@ class QuesitonCreatePage extends React.Component {
         return (
             <div className="container mt-4">
                 <BreadCrumb breadcrumb_items={breadcrumb_items}/>
-                <QuestionForm type='create'/>
+                <div className="row">
+                    <div className="col mt-4">
+                        <QuestionForm type='create'/>
+                    </div>
+                </div>
             </div>
         );
     }

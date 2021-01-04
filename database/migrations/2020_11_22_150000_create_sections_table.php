@@ -16,7 +16,7 @@ class CreateSectionsTable extends Migration
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->boolean('is_exam');
+            $table->string('type');
             $table->timestamps();
         });
     }

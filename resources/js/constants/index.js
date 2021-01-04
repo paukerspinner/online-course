@@ -1,3 +1,5 @@
+export const RESET_ALL_STATE = 'RESET_ALL_STATE';
+
 export const TOGGLE_STATUS = 'TOGGLE_STATUS';
 
 export const LOGOUT = 'LOGOUT';
@@ -10,6 +12,8 @@ export const FAILURE_CHECK_TOKEN = 'FAILURE_CHECK_TOKEN';
 
 export const SET_FLASS_MESSAGE = 'SET_FLASS_MESSAGE';
 export const FREE_FLASH_MESSAGE = 'FREE_FLASH_MESSAGE';
+
+export const SET_NEW_NOTIFICATIONS = 'SET_NEW_NOTIFICATIONS';
 
 
 export const QUESTION_TYPE = {

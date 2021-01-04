@@ -11,7 +11,7 @@ class UsersManagementPage extends React.Component {
 
     componentDidMount() {
         API.getUsers().then(res => {
-            this.setState({users: res.data.users});
+            this.setState({users: res.data.users.data});
         })
     }
     

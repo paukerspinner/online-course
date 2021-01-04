@@ -1,0 +1,12 @@
+.card-bt {  // card with bottom border
+    @extend .card;
+    border: none;
+    border-bottom: 1px solid #dddfeb;
+}
+
+.hover-shadow {
+    &:hover {
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+        transition: box-shadow 0.3s;
+    }
+}

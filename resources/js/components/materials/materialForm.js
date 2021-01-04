@@ -15,7 +15,7 @@ class MaterialForm extends React.Component {
             title: '',
             level: MATERIAL_LEVEL.MEDIUM,
             file: null,
-            path_file: ''
+            path: ''
         }
         this.handleOnChangeData = this.handleOnChangeData.bind(this)
     }
@@ -28,12 +28,8 @@ class MaterialForm extends React.Component {
         })
         if (this.props.type == 'edit') {
             API.getMaterial(this.props.match.params.id).then(res => {
-                this.setState({
-                    level: res.data.material.level,
-                    section_id: res.data.material.section_id,
-                    title: res.data.material.title,
-                    path_file: res.data.material.path
-                })
+                const { level, section_id, title, path } = res.data.material;
+                this.setState({ level, section_id, title, path })
             }).catch(err => {
                 console.log(err.response)
             })
@@ -58,7 +54,10 @@ class MaterialForm extends React.Component {
         marerial_data_form.append('section_id', section_id);
         marerial_data_form.append('title', title);
         marerial_data_form.append('level', level);
-        marerial_data_form.append('file', file);
+        if (file) {
+            marerial_data_form.append('file', file);
+        }
+        console.log(file)
         // Form Data suports only 2 types: text or file)
         if (this.props.type == 'create') {
             API.addMaterial(marerial_data_form).then(res => {
@@ -73,6 +72,7 @@ class MaterialForm extends React.Component {
             API.updateMaterial(marerial_data_form).then(res => {
                 store.dispatch(actions.setFlassMessage(res.data.message));
                 this.props.history.push('/management/materials');
+                console.log(res.data)
             }).catch(err => {
                 console.log(err.response);
             });
@@ -81,7 +81,7 @@ class MaterialForm extends React.Component {
         event.preventDefault();
     }
     render() {
-        const { sections, level, title, section_id, path_file } = this.state;
+        const { sections, level, title, section_id, path } = this.state;
         const { type } = this.props;
         return (
             <form className="user" onSubmit={this.handleSubmit.bind(this)}>
@@ -142,7 +142,7 @@ class MaterialForm extends React.Component {
                         required={type == 'create'}
                     />
                     {
-                        type == 'edit' && <a href={'/'+path_file} target="_blank" className="btn btn-sm btn-info">show</a>
+                        type == 'edit' && <a href={'/'+path} target="_blank" className="btn btn-sm btn-info">show</a>
                     }
                 </div>
                 <div className="form-group mt-4">

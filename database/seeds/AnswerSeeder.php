@@ -13,7 +13,7 @@ class AnswerSeeder extends Seeder
     public function run()
     {
         // Question 1
-        for ($i = 0; $i < 30*8; $i++) {
+        for ($i = 0; $i < 30*9; $i++) {
             for ($j = 0; $j < 4; $j++) {
                 $id = $i * 4 + $j + 1;
                 $question_id = $i + 1;

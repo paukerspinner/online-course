@@ -16,9 +16,8 @@ class MaterialsManagementPage extends React.Component {
     componentDidMount() {
         API.getMaterials().then(res => {
             this.setState({
-                materials: res.data.materials
+                materials: res.data.materials.data
             });
-            console.log(res.data)
         })
     }
 
@@ -29,7 +28,9 @@ class MaterialsManagementPage extends React.Component {
                 <BreadCrumb breadcrumb_items={breadcrumb_items} />
                 <div className="row">
                     <div className="col">
-                        <Link to="/management/materials/create" className="btn btn-primary mt-4">Create New Material</Link>
+                        <div className="text-right">
+                            <Link to="/management/materials/create" className="btn btn-primary mt-4">Create New Material</Link>
+                        </div>
                         <table className="table table-hover mt-4">
                             <thead>
                                 <tr className="text-center">
@@ -46,7 +47,7 @@ class MaterialsManagementPage extends React.Component {
                                         return (
                                             <tr className="text-center" key={idx}>
                                                 <td>{idx + 1}</td>
-                                                <td>{material.section_id}</td>
+                                                <td>{material.section_title}</td>
                                                 <td>{material.title}</td>
                                                 <td>{renderMaterialLevel(material.level)}</td>
                                                 <td>

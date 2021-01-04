@@ -46,10 +46,15 @@ class TestController extends Controller
             ], 403);
         }
         $test = TestService::makeTest();
-
-        return response()->json([
-            'test' => $test
-        ], 200);
+        if ($test) {
+            return response()->json([
+                'test' => $test
+            ], 200);
+        } else {
+            return response()->json([
+                'message_error' => 'Something went wrong'
+            ], 500);
+        }
     }
 
     public function myIndex() {

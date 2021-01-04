@@ -12,8 +12,7 @@ class StudentsManagementPage extends React.Component {
 
     componentDidMount() {
         API.getUsers({role: 'student'}).then(res => {
-            this.setState({students: res.data.users});
-            console.log(res.data.users)
+            this.setState({students: res.data.users.data});
         });
     }
     
@@ -41,13 +40,13 @@ class StudentsManagementPage extends React.Component {
                                 <td>{ user.rating }</td>
                                 <td>
                                     {
-                                        user.completed_course 
-                                        ? 'Good' 
-                                        : (<span title="Student have not completed the course">-</span>) 
-                                        }
+                                        user.grade
+                                        ? <span className="text-uppercase">{ user.grade }</span> 
+                                         : (<span title="Student have not completed the course">-</span>) 
+                                    }
                                 </td>
                                 <td>
-                                    <Link to={`/management/users/${user.id}/result`} className="btn btn-sm btn-info">Detail</Link>
+                                    <Link to={`/management/students/${user.id}/result`} className="btn btn-sm btn-info">Detail</Link>
                                 </td>
                             </tr>
                         )
@@ -66,7 +65,7 @@ const breadcrumb_items = [
         path: '#',
     },
     {
-        label: 'Users',
+        label: 'Students',
         active: true
     }
 ]

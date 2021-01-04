@@ -12,7 +12,7 @@ import FlassMessage from './components/commons/flassMessage';
 
 import Login from './components/auth/login';
 import Register from './components/auth/register';
-import ProfilePage from './page/profilePage';
+import ProfileShow from './page/profile/show';
 import HomePage from './page/homePage';
 import NotFoundPage from './page/notFound';
 import QuesitonCreatePage from './page/management/questions/create';
@@ -29,9 +29,11 @@ import BlogPage from './page/blog';
 import StudentsManagemntPage from './page/management/students';
 import StudentResultPage from './page/management/students/result';
 import UsersManagementPage from './page/management/users';
-// import for testing
-// import NotFoundPage from './page/notFound';
-//
+import BlogCreate from './page/blog/create';
+import BlogShow from './page/blog/show';
+import  NotificationPage from './page/notification';
+import NotificationShow from './page/notification/show';
+import NotificationCreate from './page/management/notification/create';
 
 class App extends React.Component {
     componentDidMount() {
@@ -58,12 +60,16 @@ class App extends React.Component {
                                     <Route path="/" exact component={HomePage} />
                                     <Route path="/login" exact component={Login} />
                                     <Route path="/register" exact component={Register} />
-                                    <AuthRoute path="/profile" exact component={ProfilePage} />
+                                    <AuthRoute path="/profile" exact component={ProfileShow} />
                                     <AuthRoute path="/course" exact component={CoursePage} />
                                     <AuthRoute path="/course/test" exact component={TestPage}/>
                                     <AuthRoute path="/course/testing" exact component={TestingPage}/>
                                     <AuthRoute path="/course/progress" exact component={ProgressPage}/>
-                                    <AuthRoute path="/blog" exact component={BlogPage} />
+                                    <AuthRoute path="/blogs" exact component={BlogPage} />
+                                    <AuthRoute path="/blogs/create" exact component={BlogCreate} />
+                                    <AuthRoute path="/blogs/:id" exact component={BlogShow} />
+                                    <AuthRoute path="/notifications" exact component={NotificationPage} />
+                                    <AuthRoute path="/notifications/:id" exact component={NotificationShow} />
 
                                     {is_admin && 
                                         (<Switch>
@@ -73,9 +79,10 @@ class App extends React.Component {
                                             <Route path="/management/materials" exact component={MaterialsManagementPage} />
                                             <Route path="/management/materials/create" exact component={MaterialCreatePage} />
                                             <Route path="/management/materials/:id/edit" exact component={MaterialEditPage} />
-                                            <Route path="/management/students" exact component={StudentsManagemntPage} />
                                             <Route path="/management/users" exact component={UsersManagementPage} />
-                                            <Route path="/management/users/:user_id/result" exact component={StudentResultPage} />
+                                            <Route path="/management/students" exact component={StudentsManagemntPage} />
+                                            <Route path="/management/students/:user_id/result" exact component={StudentResultPage} />
+                                            <Route path="/management/notifications/create" exact component={NotificationCreate} />
                                         </Switch>)
                                     }
                                     <Route>

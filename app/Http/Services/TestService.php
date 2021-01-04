@@ -8,9 +8,11 @@ use App\TestAnswer;
 use App\User;
 use Carbon\Carbon;
 use App\Answer;
+use App\Section;
 use App\Http\Services\UserService;
 use App\Http\Services\TestQuestionService;
 use Config;
+use Exception;
 
 class TestService
 {
@@ -20,11 +22,6 @@ class TestService
 
     public static function getCompletedTestsOfUser($user) {
         return $user->tests()->where('grade', '!=', null)->orderBy('updated_at', 'DESC')->get();
-
-        return Test::where([
-            ['user_id', auth()->user()->id],
-            ['grade', '!=', null]
-        ])->orderBy('updated_at', 'DESC')->get();
     }
 
     public static function makeTest() {
@@ -39,13 +36,18 @@ class TestService
             'section_id' => $current_section_id,
             'level' => auth()->user()->level
         ]);
-
-        if ($new_test->is_exam) {
-            TestQuestionService::createTestQuestionForExam($new_test);
-        } else {
-            TestQuestionService::createTestQuestionsForTest($new_test);
+        try {
+            if ($new_test->is_entrance) {
+                TestQuestionService::createTestQuestionForEntrance($new_test);
+            } else if ($new_test->is_exam) {
+                TestQuestionService::createTestQuestionForExam($new_test);
+            } else {
+                TestQuestionService::createTestQuestionsForTest($new_test);
+            }
+        } catch (Exception $e) {
+            $new_test->delete();
+            return null;
         }
-
         return $new_test;
     }
 
@@ -57,9 +59,6 @@ class TestService
             'grade' => $grade,
             'finished_at' => Carbon::now()
         ]);
-        if ($pending_test->is_exam && $pending_test->grade >= Config::get('constants.GRADD_PASS')) {
-            auth()->user()->update(['completed_course' => true]);
-        }
         return $pending_test;
     }
 
@@ -108,14 +107,79 @@ class TestService
         }
     }
 
-    public static function getFactorGradeOfLevel($test_level) {
-        switch($test_level) {
-            case Config::get('constants.EASY_LEVEL'):
-                return Config::get('constants.GRADE_FACTOR_EASY_LEVEL');
-            case Config::get('constants.MEDIUM_LEVEL'):
-                return Config::get('constants.GRADE_FACTOR_MEDIUM_LEVEL');
-            default:
-                return 1;
+    public static function getBallOfTest($test) {
+        if ($test->section_id == 3) {
+            // dd($test);
         }
+        $score = 0;
+        if ($test->is_exam) {
+            $score = $test->grade * 0.2;
+        } else {
+            switch($test->level) {
+                case Config::get('constants.EASY_LEVEL'):
+                    if ($test->grade > Config::get('constants.GRADE_EXCELLENT')) {
+                        $score = Test::EXCELLENT_GRADE_EASY_LEVEL;
+                    } else if ($test->grade > Config::get('constants.GRADE_GOOD')) {
+                        $score = Test::GOOD_GRADE_EASY_LEVEL;
+                    } else if ($test->grade >= Config::get('constants.GRADE_PASS')) {
+                        $score = Test::PASS_GRADE_EASY_LEVEL;
+                    }
+                    break;
+                case Config::get('constants.MEDIUM_LEVEL'):
+                    if ($test->grade > Config::get('constants.GRADE_EXCELLENT')) {
+                        $score = Test::EXCELLENT_GRADE_MEDIUM_LEVEL;
+                    } else if ($test->grade > Config::get('constants.GRADE_GOOD')) {
+                        $score = Test::GOOD_GRADE_MEDIUM_LEVEL;
+                    } else if ($test->grade >= Config::get('constants.GRADE_PASS')) {
+                        $score = Test::PASS_GRADE_MEDIUM_LEVEL;
+                    }
+                    break;
+                case Config::get('constants.HARD_LEVEL'):
+                    if ($test->grade > Config::get('constants.GRADE_EXCELLENT')) {
+                        $score = Test::EXCELLENT_GRADE_HARD_LEVEL;
+                    } else if ($test->grade > Config::get('constants.GRADE_GOOD')) {
+                        $score = Test::GOOD_GRADE_HARD_LEVEL;
+                    } else if ($test->grade >= Config::get('constants.GRADE_PASS')) {
+                        $score = Test::PASS_GRADE_HARD_LEVEL;
+                    }
+                    break;
+            }
+        }
+        return $score;
+    }
+
+    public static function getFailSectionsOfExam($exam_test_id) {      // trong bài exam, đưa ra những module đạt kết quả không tốt ( < 60% )
+        $exam_test = Test::find($exam_test_id);
+        $fail_sections = [];
+        $all_modules = Section::all()->where('is_module', true);
+        foreach ($all_modules as $module) {
+            $all_test_questions = $exam_test->testQuestions()->get()->where('section_id', $module->id);
+            $is_correct_count = 0;
+            $all_count = count($all_test_questions);
+            foreach ($all_test_questions as $test_question) {
+                if ($test_question->is_correct) {
+                    $is_correct_count += 1;
+                }
+            }
+            if ($is_correct_count * 100 / $all_count < Test::GRADE_PASS) {
+                $fail_sections[] = $module;
+            }
+        }
+        return $fail_sections;
+    }
+
+    // public static function getFactorGradeOfLevel($test_level) {
+    //     switch($test_level) {
+    //         case Config::get('constants.EASY_LEVEL'):
+    //             return Config::get('constants.GRADE_FACTOR_EASY_LEVEL');
+    //         case Config::get('constants.MEDIUM_LEVEL'):
+    //             return Config::get('constants.GRADE_FACTOR_MEDIUM_LEVEL');
+    //         default:
+    //             return 1;
+    //     }
+    // }
+
+    public static function getLastTest($section_id) {
+        return auth()->user()->tests()->where('section_id', $section_id)->where('grade', '!=', null)->get()->last();
     }
 }

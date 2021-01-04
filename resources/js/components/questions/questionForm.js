@@ -22,25 +22,12 @@ const htmlToEditorState = html_markup => {
     return EditorState.createWithContent(state)
 }
 
-const toolbar_config = {
-    options: ['inline', 'blockType', 'fontSize', 'fontFamily', 'list', 'textAlign', 'image'],
-    inline: { inDropdown: true },
-    list: { inDropdown: true },
-    textAlign: { inDropdown: true },
-    link: { inDropdown: true },
-    image: {
-        defaultSize: {
-            width: "300"
-        }
-    },
-    history: { inDropdown: true },
-}
-
 class QuestionForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             editorState: EditorState.createEmpty(),
+            uploadedImages: [],
             question: {
                 text: null,
                 type: QUESTION_TYPE.SINGLE_CHOICE,
@@ -188,100 +175,138 @@ class QuestionForm extends React.Component {
         })
     }
 
+    // _uploadImageCallBack(file) {
+    //     let uploadedImages = this.state.uploadedImages;
+
+    //     // const imageObject = {
+    //     //     file: file,
+    //     //     localSrc: URL.createObjectURL(file),
+    //     //   }
+    //     const imageObject = {
+    //         file: file,
+    //         localSrc: 's',
+    //     }
+    //     console.log('ADD IMG')
+
+
+    //     uploadedImages.push(imageObject);
+
+    //     this.setState({ uploadedImages: uploadedImages })
+
+    //     return new Promise(
+    //       (resolve, reject) => {
+    //         resolve({ data: { link: imageObject.localSrc } });
+    //       }
+    //     );
+    // }
+
     render() {
         const { editorState, question, answers, sections } = this.state;
         return (
-            <div>
-                <form onSubmit={this.handleSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="question_level">Question Module</label>
-                        <select name="section_id" className="form-control shadow" id="question_section" value={question.section_id} onChange={this.handleChangeDataQuestion}>
-                            {
-                                sections.map(section => {
-                                    if (!section.is_exam) {
-                                        return (
-                                            <option value={section.id} key={section.id}>{section.title}</option>
-                                        )
-                                    }
-                                })
-                            }
-                        </select>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="question_level">Question Level</label>
-                        <select name="level" className="form-control shadow" id="question_level" value={question.level} onChange={this.handleChangeDataQuestion}>
-                            <option value={QUESTION_LEVEL.EASY}>Easy</option>
-                            <option value={QUESTION_LEVEL.MEDIUM}>Medium</option>
-                            <option value={QUESTION_LEVEL.HARD}>Hard</option>
-                        </select>
-                    </div>
+            <form onSubmit={this.handleSubmit}>
+                <div className="form-group">
+                    <label htmlFor="question_level">Question Module</label>
+                    <select name="section_id" className="form-control shadow" id="question_section" value={question.section_id} onChange={this.handleChangeDataQuestion}>
+                        {
+                            sections.map(section => {
+                                if (!section.is_exam) {
+                                    return (
+                                        <option value={section.id} key={section.id}>{section.title}</option>
+                                    )
+                                }
+                            })
+                        }
+                    </select>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="question_level">Question Level</label>
+                    <select name="level" className="form-control shadow" id="question_level" value={question.level} onChange={this.handleChangeDataQuestion}>
+                        <option value={QUESTION_LEVEL.EASY}>Easy</option>
+                        <option value={QUESTION_LEVEL.MEDIUM}>Medium</option>
+                        <option value={QUESTION_LEVEL.HARD}>Hard</option>
+                    </select>
+                </div>
 
-                    <div className="form-group">
-                        <label htmlFor="question">Question Content</label>
-                        <Editor
-                            editorState={editorState}
-                            toolbarClassName="toolbarClassName"
-                            wrapperClassName="wrapperClassName"
-                            editorClassName="editorClassName"
-                            onEditorStateChange={this.handleOnChangeEditor}
-                            toolbar={toolbar_config}
-                        />
-                    </div>
-                    {
-                        answers.map((answer, idx) => {
+                <div className="form-group">
+                    <label htmlFor="question">Question Content</label>
+                    <Editor
+                        editorState={editorState}
+                        toolbarClassName="toolbarClassName"
+                        wrapperClassName="wrapperClassName"
+                        editorClassName="editorClassName"
+                        onEditorStateChange={this.handleOnChangeEditor}
+                        toolbar={
+                            {
+                                options: ['inline', 'fontSize', 'list', 'textAlign', 'image'],
+                                inline: { inDropdown: true },
+                                list: { inDropdown: true },
+                                textAlign: { inDropdown: true },
+                                link: { inDropdown: true },
+                                image: {
+                                    defaultSize: {
+                                        width: "300"
+                                    },
+                                    // uploadCallback: this._uploadImageCallBack
+                                },
+                                history: { inDropdown: true },
+                            }
+                        }
+                    />
+                </div>
+                {
+                    answers.map((answer, idx) => {
+                        return (
+                            <div className="form-group" key={idx}>
+                                <label htmlFor={`option${idx}`} >Option {idx + 1}</label>
+                                <input type="text" className="form-control shadow" id={`option${idx}`} name={idx} value={answers[idx].text} required onChange={this.handleChangeDataAnswer}></input>
+                            </div>
+                        )
+                    })
+                }
+
+
+                <div className="form-group">
+                    <label htmlFor="question_type">Question Type</label>
+                    <select name="type" className="form-control shadow" id="question_type" value={question.type} onChange={this.handleChangeDataQuestion}>
+                        <option value={QUESTION_TYPE.SINGLE_CHOICE}>Single choice</option>
+                        <option value={QUESTION_TYPE.MULTIPLE_CHOICE}>Multiple choice</option>
+                    </select>
+                </div>
+                {question.type == QUESTION_TYPE.SINGLE_CHOICE &&
+                    <div className="form-group row">
+                        <div className="col-12">
+                            <label>Answer</label>
+                        </div>
+                        {[0, 1, 2, 3].map(value => {
                             return (
-                                <div className="form-group" key={idx}>
-                                    <label htmlFor={`option${idx}`} >Option {idx + 1}</label>
-                                    <input type="text" className="form-control shadow" id={`option${idx}`} name={idx} value={answers[idx].text} required onChange={this.handleChangeDataAnswer}></input>
+                                <div className="col-md-3 col-sm-6" key={value}>
+                                    <input type="radio" id={`select${value}`} name="answer" value={value} onChange={this.handleSelectSingleChoice} checked={answers[value].is_correct} />&nbsp;
+                                    <label htmlFor={`select${value}`}>Option {value + 1}</label>
                                 </div>
                             )
-                        })
-                    }
-
-
-                    <div className="form-group">
-                        <label htmlFor="question_type">Question Type</label>
-                        <select name="type" className="form-control shadow" id="question_type" value={question.type} onChange={this.handleChangeDataQuestion}>
-                            <option value={QUESTION_TYPE.SINGLE_CHOICE}>Single choice</option>
-                            <option value={QUESTION_TYPE.MULTIPLE_CHOICE}>Multiple choice</option>
-                        </select>
+                        })}
                     </div>
-                    {question.type == QUESTION_TYPE.SINGLE_CHOICE &&
-                        <div className="form-group row">
-                            <div className="col-12">
-                                <label>Answer</label>
-                            </div>
-                            {[0, 1, 2, 3].map(value => {
-                                return (
-                                    <div className="col-md-3 col-sm-6" key={value}>
-                                        <input type="radio" id={`select${value}`} name="answer" value={value} onChange={this.handleSelectSingleChoice} checked={answers[value].is_correct} />&nbsp;
-                                        <label htmlFor={`select${value}`}>Option {value + 1}</label>
-                                    </div>
-                                )
-                            })}
+                }
+                {question.type == QUESTION_TYPE.MULTIPLE_CHOICE &&
+                    <div className="form-group row">
+                        <div className="col-12">
+                            <label htmlFor="Option4">Answer</label>
                         </div>
-                    }
-                    {question.type == QUESTION_TYPE.MULTIPLE_CHOICE &&
-                        <div className="form-group row">
-                            <div className="col-12">
-                                <label htmlFor="Option4">Answer</label>
-                            </div>
-                            {[0, 1, 2, 3].map(value => {
-                                return (
-                                    <div className="col-md-3 col-sm-6" key={value}>
-                                        <input type="checkbox" id={`select${value}`} name="multichoice_select1" value={value} onChange={this.handleSelectMultipleChoice} checked={answers[value].is_correct} />&nbsp;
-                                        <label htmlFor={`select${value}`}>Option {value + 1}</label>
-                                    </div>
-                                )
-                            })}
-                        </div>
-                    }
-
-                    <div className="form-group text-center">
-                        <button type="submit" className="btn btn-primary">Save</button>
+                        {[0, 1, 2, 3].map(value => {
+                            return (
+                                <div className="col-md-3 col-sm-6" key={value}>
+                                    <input type="checkbox" id={`select${value}`} name="multichoice_select1" value={value} onChange={this.handleSelectMultipleChoice} checked={answers[value].is_correct} />&nbsp;
+                                    <label htmlFor={`select${value}`}>Option {value + 1}</label>
+                                </div>
+                            )
+                        })}
                     </div>
-                </form>
-            </div>
+                }
+
+                <div className="form-group text-center">
+                    <button type="submit" className="btn btn-primary">Save</button>
+                </div>
+            </form>
         );
     }
 }

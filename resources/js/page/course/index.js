@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import * as API from '../../ulties/api';
-import { formatDate } from '../../ulties/string';
+import moment from 'moment'
 import BreadCrumb from '../../components/commons/breadcrumb';
 
 class CoursePage extends React.Component {
@@ -22,7 +22,7 @@ class CoursePage extends React.Component {
         API.getMaterials().then(res => {
             console.log(res.data)
             this.setState({
-                materials: res.data.materials
+                materials: res.data.materials.data
             })
         })
     }
@@ -40,26 +40,26 @@ class CoursePage extends React.Component {
                         materials.map(material => {
                             return (
                                 <div className="col-xl-6 mb-2" key={material.id}>
-                                    <div className="card border-left-primary shadow h-100">
+                                    <a className="card-bt hover-shadow h-100 none-a" href={'/' + material.path} target="_blank" >
                                         <div className="card-body">
                                             <div className="row no-gutters align-items-center">
                                                 <div className="col-lg-8">
                                                     <i className="fa fa-file-pdf-o fa-2x text-gray-300"/>
-                                                    <a href={'/' + material.path} target="_blank" className="none-a h5 pl-2 font-weight-bold text-gray-800">
+                                                    <span className="h5 pl-2 font-weight-bold text-gray-800">
                                                         {material.title}
-                                                    </a>
+                                                    </span>
                                                 </div>
                                                 <div className="col-lg-4">
                                                     {/* <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                         Earnings (Monthly)</div>
                                                     <div className="h5 mb-0 font-weight-bold text-gray-800">$40,000</div> */}
                                                     <div className="pl-2 pt-2">
-                                                        Updated: {formatDate(material.updated_at)}
+                                                        Updated: {moment(material.updated_at).format('DD/MM/YYYY')}
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 </div>
                             )
                         })

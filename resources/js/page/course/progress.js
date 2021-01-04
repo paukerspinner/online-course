@@ -1,12 +1,13 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import * as API from '../../ulties/api';
-import { QUESTION_LEVEL as TEST_LEVEL, TEST_GRADE, USER_LEVEL } from '../../constants';
+import { connect } from 'react-redux'
 import * as actions from '../../actions';
 import { store } from '../..';
 import TestResult from '../../components/test/testResult';
 import BreadCrumb from '../../components/commons/breadcrumb';
 import Transcript from '../../components/user/transcript';
+import { stringOfTestLevel } from '../../ulties/string';
 
 class ProgressPage extends React.Component {
     constructor(props) {
@@ -14,34 +15,37 @@ class ProgressPage extends React.Component {
         this.state = {
             tests: [],
             recommended_materials: [],
-            myself: {}
+            transcript: {},
+            fail_modules_in_exam: []
         }
         this.getRecommendedMaterials = this.getRecommendedMaterials.bind(this);
         this.getTest = this.getTest.bind(this);
         this.requestUpLevel = this.requestUpLevel.bind(this);
-        this.getMyself = this.getMyself.bind(this);
+        this.requestDownLevel = this.requestDownLevel.bind(this);
+        this.getMyTranscript = this.getMyTranscript.bind(this)
     }
     componentDidMount() {
         this.getTest();
         this.getRecommendedMaterials();
-        this.getMyself();
+        this.getFailModulesInExam();
+        this.getMyTranscript();
     }
     getTest() {
         API.getMyTests().then(res => {
             this.setState({
                 tests: res.data.tests
             })
-            console.log(res.data.tests)
         }).catch(err => {
-            console.log(err.response)
+            // console.log(err.response)
         })
     }
 
-    getMyself() {
-        API.getMyself().then(res => {
-            this.setState({ myself: res.data.user });
-            console.log(res.data)
-        })
+    getMyTranscript() {
+        API.getMyTranscript().then(res => {
+            this.setState({
+                transcript: res.data.transcript
+            })
+        });
     }
 
     getRecommendedMaterials() {
@@ -49,74 +53,108 @@ class ProgressPage extends React.Component {
             this.setState({
                 recommended_materials: res.data.materials
             });
-            console.log(res.data.materials)
+        })
+    }
+
+    getFailModulesInExam() {
+        API.getFailModulesInExam().then(res => {
+            this.setState({
+                fail_modules_in_exam: res.data.fail_modules
+            });
         })
     }
 
     requestUpLevel() {
-        if (confirm('You sure to upgrade level')) {
-            API.requestUpLevel().then(res => {
-                store.dispatch(actions.setFlassMessage(res.data.message));
-                this.getRecommendedMaterials();
-            }).catch(err => {
-                if (err.response.status == 403) {
-                    store.dispatch(actions.setFlassMessage(err.response.data.message_error, 'warning'))
-                }
-            })
-        }
+        API.requestUpLevel().then(res => {
+            store.dispatch(actions.setFlassMessage(res.data.message));
+            this.getRecommendedMaterials();
+        }).catch(err => {
+            if (err.response.status == 403) {
+                store.dispatch(actions.setFlassMessage(err.response.data.message_error, 'warning'))
+            }
+        })
+    }
+
+    requestDownLevel() {
+        API.requestDownLevel().then(res => {
+            store.dispatch(actions.setFlassMessage(res.data.message));
+            this.getRecommendedMaterials();
+        }).catch(err => {
+            if (err.response.status == 403) {
+                store.dispatch(actions.setFlassMessage(err.response.data.message_error, 'warning'))
+            }
+        })
     }
 
     render() {
-        const { tests, recommended_materials, myself } = this.state;
+        const { tests, recommended_materials, transcript, fail_modules_in_exam } = this.state;
         return (
             <div className="container mt-4">
                 <BreadCrumb breadcrumb_items={breadcrumb_items} />
                 <div className="row">
                     {
-                        recommended_materials.length ?
-                        (<div className="col mt-4">
-                            <div className="card shadow">
-                                <div className="card-header bg-primary">
-                                    <h5 className="m-0 font-weight-bold text-light">
-                                        Information
-                                    </h5>
-                                </div>
-                                <div className="card-body">
-                                    <div>
-                                        <p className="m-0">Your level: {renderUserLevel(recommended_materials[0].level)}</p>
-                                        <a className="" onClick={this.requestUpLevel}>Request up level {'>>'}</a>
-                                    </div><hr />
-                                    <div>
-                                        <span className="">Recommended materials:</span>
-                                    </div>
-                                    {
-                                        recommended_materials.map((material, idx) => {
-                                            return (
-                                                <div key={idx}>
-                                                    <p className="m-0">{idx + 1}. {material.title}</p>
-                                                    <a href={'/' + material.path} target="_blank" className="pl-6">
-                                                        Show {'-->'}
+                        <div className="col-lg-8 col-md-9 m-auto">
+                            <div className="card-bt hover-shadow  mt-4">
+                                <div className="card-body text-center p-0">
+                                    <div className="row">
+                                        {
+                                            (transcript.data && transcript.data.slice(-1)[0].rating > 0) ? (
+                                                <div className="col-12 pt-4">
+                                                    <span className="mb-2 text-xs font-weight-bold">You should carefully learn the following modules: </span>
+                                                    {
+                                                        fail_modules_in_exam.length ? fail_modules_in_exam.map(fail_module => fail_module.title).join(', ') : 'no module at all'
+                                                    }
+                                                </div>
+                                            ) : null
+                                        }
+                                        {
+                                            recommended_materials.length && recommended_materials[0].section_id > 1 && recommended_materials[0].section_id < 10 ? (  // section from 2 to 9 are modules
+                                                <div className="col-lg-6 mt-4 text-center">
+                                                    <div className="mb-2 text-xs font-weight-bold">Current level</div>
+                                                    <a className="btn btn-sm btn-primary" onClick={this.requestDownLevel}>
+                                                        <i className="fas fa-arrow-alt-circle-down"></i>
+                                                    </a>
+                                                    <span className="text-xs font-weight-bold text-primary text-uppercase p-4">{stringOfTestLevel(recommended_materials[0].level)}</span>
+                                                    <a className="btn btn-sm btn-primary" onClick={this.requestUpLevel}>
+                                                        <i className="fas fa-arrow-alt-circle-up"></i>
                                                     </a>
                                                 </div>
-                                            )
-                                        })
-                                    }
-                                    <div className="row mt-2 text-center">
-                                        <div className="col">
+                                            ) : null
+                                        }
+                                        {
+                                            recommended_materials.length ? (
+                                                <div className="col-lg-6 m-auto text-center">
+                                                    <div>
+                                                        <div className="mt-4 mb-2 text-xs font-weight-bold">Recommended materials</div>
+                                                    </div>
+                                                    {
+                                                        recommended_materials.map((material, idx) => {
+                                                            return (
+                                                                <div key={idx}>
+                                                                    <a className="m-0" href={'/' + material.path} target="_blank">{idx + 1}. {material.title}</a>
+                                                                </div>
+                                                            )
+                                                        })
+                                                    }
+                                                </div>
+                                            ) : null
+                                        }
+                                        <div className="col-12 p-4">
                                             <Link to="/course" className="btn btn-primary">Go to course</Link>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>) : null
+                        </div>
                     }
                 </div>
+
                 <div className="row">
                     <div className="col-lg-4 mt-4">
-                        <Transcript transcript={myself.transcript} fullname={[myself.surname, myself.name, myself.patronymic].join(' ')}/>
+                        <Transcript transcript={transcript.data} fullname={transcript.fullname}/>
                     </div>
                     <div className="col mt-4">
-                        <div className="card shadow">
+                        <div className="card-bt hover-shadow h-100">
                             <div className="card-header bg-primary">
                                 <h5 className="m-0 font-weight-bold text-light">
                                     Test results
@@ -142,28 +180,6 @@ class ProgressPage extends React.Component {
     }
 }
 
-const renderTestLevel = test_level => {
-    switch (test_level) {
-        case TEST_LEVEL.EASY:
-            return 'EASY';
-        case TEST_LEVEL.MEDIUM:
-            return 'MEDIUM';
-        case TEST_LEVEL.HARD:
-            return 'HARD';
-    }
-}
-
-const renderUserLevel = user_level => {
-    switch (user_level) {
-        case USER_LEVEL.PASS:
-            return 'Normal';
-        case USER_LEVEL.GOOD:
-            return 'Good';
-        case USER_LEVEL.HARD:
-            return 'Excellent';
-    }
-}
-
 const breadcrumb_items = [
     {
         label: 'Home',
@@ -179,4 +195,10 @@ const breadcrumb_items = [
     }
 ]
 
-export default withRouter(ProgressPage);
+const mapStateToProps = state => {
+    return {
+        logged_user: state.auth.user
+    }
+}
+
+export default connect(mapStateToProps)(withRouter(ProgressPage));

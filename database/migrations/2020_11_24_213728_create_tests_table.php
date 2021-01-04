@@ -17,7 +17,7 @@ class CreateTestsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('section_id');
-            $table->tinyInteger('level');
+            $table->tinyInteger('level')->nullable();
             $table->tinyInteger('grade')->nullable();
             $table->timestamp('started_at')->nullable();
             $table->timestamp('finished_at')->nullable();

@@ -9,14 +9,17 @@
 
 @import 'global';
 @import 'login';
-@import 'sidebar';
 @import 'banner';
 @import 'contents';
 @import 'footer';
 @import 'button';
+@import 'dropdowns';
 @import 'draft';
 @import 'alert';
 @import 'size';
+@import 'card';
+@import 'fadeout';
+@import 'sidebar';
 
 .dropdown-item:hover {
     cursor: pointer;

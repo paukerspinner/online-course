@@ -7,30 +7,35 @@ class Sidebar extends React.Component {
         return (
             <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
+                <br/>
                 <a className="sidebar-brand d-flex align-items-center justify-content-center" href="/">
                     <div className="mx-3">OCourse <sup>*</sup></div>
                 </a>
+                <br/>
 
                 <hr className="sidebar-divider my-0" />
 
                 <li className="nav-item">
-                    <a className="nav-link" href="index.html">
-                        <i className="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Dashboard</span></a>
+                    <a className="nav-link" href="#">
+                        <i className="fas fa-tachometer-alt"></i>Dashboard
+                    </a>
                 </li>
 
+                <hr className="sidebar-divider" />
+
                 <li className="nav-item">
-                    <a className="nav-link" href="#" data-toggle="collapse" data-target="#collapseOne"
+                    <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
                         aria-expanded="true" aria-controls="collapseOne">
-                        <b>Contents</b>
+                        <i className="fas fa-book-open"></i>
+                        <span>Contents</span>
                     </a>
-                    <div id="collapseOne" className="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div id="collapseOne" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div className="bg-white py-2 collapse-inner rounded">
                             <Link className="collapse-item" to="/management/materials">
-                                <i className="fa fa-file-pdf-o" aria-hidden="true" /> Materials
+                                <i className="fas fa-file-pdf" aria-hidden="true" /> &nbsp;Materials
                             </Link>
                             <Link className="collapse-item" to="/management/questions">
-                                <i className="fa fa-question-circle" aria-hidden="true"/> Question
+                                <i className="fas fa-question-circle" aria-hidden="true"/> Question
                             </Link>
                         </div>
                     </div>
@@ -41,7 +46,8 @@ class Sidebar extends React.Component {
                 <li className="nav-item">
                     <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                         aria-expanded="true" aria-controls="collapseTwo">
-                        <b>Accounts</b>
+                        <i className="fas fa-address-book"></i>
+                        <span>Accounts</span>
                     </a>
                     <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div className="bg-white py-2 collapse-inner rounded">
@@ -60,15 +66,16 @@ class Sidebar extends React.Component {
                 <li className="nav-item">
                     <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
                         aria-expanded="true" aria-controls="collapseThree">
-                        <b>Communication</b>
+                        <i className="fas fa-comments"></i>
+                        <span>Communication</span>
                     </a>
                     <div id="collapseThree" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div className="bg-white py-2 collapse-inner rounded">
-                            <Link className="collapse-item" to="/management/users">
+                            <Link className="collapse-item" to="#">
                                 <i className="fa fa-envelope" aria-hidden="true"/> Messages
                             </Link>
-                            <Link className="collapse-item" to="/management/students">
-                                <i className="fa fa-bell" aria-hidden="true" /> Reports
+                            <Link className="collapse-item" to="/management/notifications/create">
+                                <i className="fa fa-bell" aria-hidden="true" /> Notifications
                             </Link>
                         </div>
                     </div>
@@ -76,11 +83,12 @@ class Sidebar extends React.Component {
 
                 <hr className="sidebar-divider d-none d-md-block" />
 
-                {/* <div className="sidebar-card">
-                    <img className="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="" />
-                    <p className="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
-                    <a className="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
-                </div> */}
+                <div className="card bg-primary border-0 text-light">
+                    <div className="card-body text-center">
+                        <p className="text-center mb-2"><strong>OCOURSE</strong> is developed by Pauker. Click the button below for more infomation</p>
+                        <a className="btn btn-success btn-sm" href="https://www.facebook.com/xuancanh.pham.165/">Contact !</a>
+                    </div>
+                </div>
 
             </ul>
         )

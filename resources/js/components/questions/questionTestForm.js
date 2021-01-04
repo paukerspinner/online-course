@@ -19,7 +19,7 @@ class QuestionTestForm extends React.Component {
         const { test_question } = this.props;
 
         this.setState({
-            test_answers: test_question.test_answers
+            test_answers: shuffle(test_question.test_answers)
         });
     }
 
@@ -77,7 +77,7 @@ class QuestionTestForm extends React.Component {
         const { test_question, idx } = this.props;
         const { test_answers, is_corrected, is_success_answers } = this.state;
         return (
-            <div className="card shadow mb-4">
+            <div className="card-bt hover-shadow mb-4">
                 <div className="card-header py-3">
                     <h6 className="m-0 font-weight-bold text-primary">Question {idx + 1}</h6>
                 </div>
@@ -150,6 +150,10 @@ const renderCorrection = answer => {
     if (answer.is_corrected != answer.is_selected) {
         return <span className="text-danger"> X</span>
     };
+}
+
+const shuffle = arr => {
+    return arr.sort(() => Math.random() - 0.5);
 }
 
 export default QuestionTestForm;

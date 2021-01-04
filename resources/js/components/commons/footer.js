@@ -41,15 +41,15 @@ class Footer extends React.Component {
                                 <form action="#">
                                     <div className="group-input">
                                         <input type="text" placeholder="Email" />
-                                        <button type="submit" className="btn-subscribe"><i className="fa fa-envelope-o" aria-hidden="true"></i></button>
+                                        <button type="submit" className="btn-subscribe"><i className="far fa-envelope" aria-hidden="true"></i></button>
                                     </div>
                                 </form>
                                 <div className="footer-contact">
-                                    <a href="#" className="btn btn-circle btn-social"><i className="fa fa-facebook"></i></a>
-                                    <a href="#" className="btn btn-circle btn-social"><i className="fa fa-twitter"></i></a>
-                                    <a href="#" className="btn btn-circle btn-social"><i className="fa fa-youtube-play"></i></a>
-                                    <a href="#" className="btn btn-circle btn-social"><i className="fa fa-instagram"></i></a>
-                                    <a href="#" className="btn btn-circle btn-social"><i className="fa fa-pinterest"></i></a>
+                                    <a href="https://www.facebook.com/hoangcongkinh1108/" className="btn btn-circle btn-social"><i className="fab fa-facebook-f"></i></a>
+                                    <a href="#" className="btn btn-circle btn-social"><i className="fab fa-twitter"></i></a>
+                                    <a href="#" className="btn btn-circle btn-social"><i className="fab fa-youtube"></i></a>
+                                    <a href="#" className="btn btn-circle btn-social"><i className="fab fa-instagram"></i></a>
+                                    <a href="#" className="btn btn-circle btn-social"><i className="fab fa-pinterest"></i></a>
                                 </div>
                             </div>
                         </div>

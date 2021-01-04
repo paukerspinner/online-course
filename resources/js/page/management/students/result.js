@@ -9,30 +9,34 @@ class StudentResultPage extends React.Component {
         super(props);
         this.state = {
             tests: [],
-            user: {}
+            transcript: {}
         }
     }
 
     componentDidMount() {
-        API.getTestsOfUser(this.props.match.params.user_id).then(res => {
+        const { user_id } = this.props.match.params;
+        API.getTestsOfUser(user_id).then(res => {
             this.setState({ tests: res.data.tests });
         });
-        API.getUser(this.props.match.params.user_id).then(res => {
-            this.setState({ user: res.data.user })
+
+        API.getTranscript(user_id).then(res => {
+            this.setState({
+                transcript: res.data.transcript
+            })
         })
     }
 
     render() {
-        const { tests, user } = this.state;
+        const { tests, transcript } = this.state;
         return (
             <div className="container mt-4">
                 <BreadCrumb breadcrumb_items={breadcrumb_items} />
-                <div className="row">
-                    <div className="col-lg-4 mt-4">
-                        <Transcript transcript={user.transcript} fullname={[user.surname, user.name, user.patronymic].join(' ')} />
+                <div className="row mt-4">
+                    <div className="col-xl-4 col-md-8 offset-md-2 offset-xl-0 mb-2">
+                        <Transcript transcript={transcript.data} fullname={transcript.fullname} />
                     </div>
-                    <div className="col">
-                        <div className="card shadow mt-4">
+                    <div className="col-xl-8 col-md-8 offset-md-2 offset-xl-0 mb-2">
+                        <div className="card-bt hover-shadow h-100">
                             <div className="card-header bg-primary">
                                 <h5 className="m-0 font-weight-bold text-light">
                                     Test results

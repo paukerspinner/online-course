@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Http\Services;
+use App\Test;
 use App\TestQuestion;
 use App\TestAnswer;
 use App\Question;
+use App\Section;
 use App\Http\Services\TestAnswerService;
 use Config;
+use Exception;
 
 class TestQuestionService
 {
@@ -14,8 +17,22 @@ class TestQuestionService
             ['level', $test->level],
             ['section_id', $test->section_id]
         ])->get()->map->only('id')->all();
-        $required_questions_size = Config::get('constants.QUESTION_NUMBER');
-        $selected_questions = (new static)::getRandomQuestionsFromBank($question_bank, $required_questions_size);
+        $selected_questions = (new static)::getRandomQuestionsFromBank($question_bank, Test::QUES_NUM_FOR_MOD);
+        
+        foreach($selected_questions as $selected_question) {
+            $test_question = TestQuestion::create([
+                'test_id' => $test->id,
+                'question_id' => $selected_question['id']
+            ]);
+            TestAnswerService::createTestAnswerForTestQuestion($test_question);
+        }
+    }
+
+    public static function createTestQuestionForEntrance($test) {
+        $question_bank = Question::where([
+            ['section_id', $test->section_id]
+        ])->get()->map->only('id')->all();
+        $selected_questions = (new static)::getRandomQuestionsFromBank($question_bank, Test::QUES_NUM_FOR_MOD);
         foreach($selected_questions as $selected_question) {
             $test_question = TestQuestion::create([
                 'test_id' => $test->id,
@@ -40,9 +57,11 @@ class TestQuestionService
     }
 
     public static function createTestQuestionForExam($test) {
-        for ($section_id=1; $section_id < $test->section_id; $section_id++) { 
+        $all_modules = Section::all()->where('is_module', true);
+        foreach ($all_modules as $module) {
+            $section_id = $module->id;
             $question_bank = Question::where('section_id', $section_id)->get()->map->only('id')->all();
-            $selected_questions = (new static)::getRandomQuestionsFromBank($question_bank, 1);
+            $selected_questions = (new static)::getRandomQuestionsFromBank($question_bank, Test::QUES_NUM_PER_MOD_FOR_EXAM);
             foreach($selected_questions as $selected_question) {
                 $test_question = TestQuestion::create([
                     'test_id' => $test->id,
@@ -50,7 +69,6 @@ class TestQuestionService
                 ]);
                 TestAnswerService::createTestAnswerForTestQuestion($test_question);
             }
-
         }
     }
 }

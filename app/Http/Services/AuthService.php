@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use App\Mail\MailConfirmAccount;
 use App\User;
+use App\Profile;
 use App\Verification;
 
 class AuthService
@@ -15,10 +16,14 @@ class AuthService
     public static function registerUser($registration_data){
         $user = User::create([
             'email' => $registration_data['email'],
+            'password' => bcrypt($registration_data['password'])
+        ]);
+
+        $profile = Profile::create([
+            'user_id' => $user->id,
             'name' => $registration_data['name'],
             'surname' => $registration_data['surname'],
-            'patronymic' => $registration_data['patronymic'],
-            'password' => bcrypt($registration_data['password'])
+            'patronymic' => array_key_exists('patronymic', $registration_data) ? $registration_data['patronymic'] : null,
         ]);
 
         $verification_code = self::sendVerificationCode($registration_data['email']);

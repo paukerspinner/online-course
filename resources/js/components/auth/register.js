@@ -34,6 +34,7 @@ class Register extends React.Component {
             console.log(res.data)
             this.props.history.push('/login');
         }).catch(err => {
+            console.log(err.response)
             this.setState({
                 error_message: err.response.data
             })
@@ -43,7 +44,7 @@ class Register extends React.Component {
     render() {
         return (
             <div className="container mt-0">
-                <div className="card o-hidden border-0 shadow-lg my-5">
+                <div className="card-bt o-hidden hover-shadow my-5">
                     <div className="card-body p-0">
                         <div className="row">
                             <div className="col-lg-5 d-none d-lg-block bg-register-image"></div>

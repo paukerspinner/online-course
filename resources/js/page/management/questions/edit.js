@@ -7,7 +7,11 @@ class QuesitonEditPage extends React.Component {
         return (
             <div className="container mt-4">
                 <BreadCrumb breadcrumb_items={breadcrumb_items}/>
-                <QuestionForm type='edit'/>
+                <div className="row">
+                    <div className="col mt-4">
+                        <QuestionForm type='edit'/>
+                    </div>
+                </div>
             </div>
         );
     }

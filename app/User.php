@@ -14,18 +14,22 @@ class User extends Authenticatable implements JWTSubject
     use Notifiable;
 
     protected $fillable = [
-       'email', 'name', 'surname', 'patronymic', 'role', 'verified', 'password', 'level', 'completed_course'
+       'email', 'role', 'verified', 'password', 'level'
     ];
 
     protected $casts = [
         'completed_course' => 'boolean',
         'verified' => 'boolean'
     ];
-    protected $appends = ['rating'];
+    protected $appends = ['rating', 'completed_course'];
 
     protected $hidden = [
         'password',
     ];
+
+    public function notificationUsers() {
+        return $this->hasMany('App\NotificationUser', 'user_id');
+    }
 
     public function verification() {
         return $this->hasOne('App\Verification', 'user_id');
@@ -33,6 +37,10 @@ class User extends Authenticatable implements JWTSubject
 
     public function tests() {
         return $this->hasMany('App\Test', 'user_id');
+    }
+
+    public function profile() {
+        return $this->hasOne('App\Profile', 'user_id');
     }
 
     public function getRatingAttribute() {
@@ -43,20 +51,35 @@ class User extends Authenticatable implements JWTSubject
         return round($rating, 2);
     }
 
+    public function getCompletedCourseAttribute() {
+        $transcript = $this->transcript;
+        return end($transcript)->rating * 100 / 20 >= Config::get('constants.GRADE_PASS');
+    }
+
+    public function getGradeAttribute() {
+        $completed_course = $this->completed_course;
+        if ($completed_course) {
+            if ($this->rating > Test::GRADE_EXCELLENT) return 'excellent';
+            if ($this->rating > Test::GRADE_GOOD) return 'good';
+            if ($this->rating >= Test::GRAE_PASS) return 'satisfatory';
+        } else {
+            return null;
+        }
+    }
+
     public function getTranscriptAttribute() {
         $transcript = [];
         $tests = $this->tests()->get();
         $rated_tests = [];
-        $all_sections = Section::all();
+        $all_sections = Section::all()->where('is_entrance', false)->where('is_additional', false);
         foreach ($all_sections as $section) {
             $last_test = $tests->where('section_id', $section->id)->where('grade', '!=', null)->last();
-            if ($last_test != null) {
-                $grade_factor = TestService::getFactorGradeOfLevel($last_test->level);
-                $max_rating_of_test = $last_test->is_exam ? 20 : 10;
+            if ($last_test !== null) {
+                $rating = TestService::getBallOfTest($last_test);
                 $test_rating = (object)([
                     'section_id' => $section->id,
                     'section_label' => $section->title,
-                    'rating' => $grade_factor * $last_test->grade / 100 * $max_rating_of_test
+                    'rating' => round($rating, 2)
                 ]);
             } else {
                 $test_rating = (object)([
@@ -68,19 +91,6 @@ class User extends Authenticatable implements JWTSubject
             $transcript[] = $test_rating;
         }
         return $transcript;
-    }
-
-    public function getRatedTests() {
-        $tests = $this->tests()->get();
-        $rated_tests = [];
-        $all_sections = Section::all();
-        foreach ($all_sections as $section) {
-            $last_test = $tests->where('section_id', $section->id)->where('grade', '!=', null)->last();
-            if ($last_test != null) {
-                $rated_tests[] = $last_test;
-            }
-        }
-        return $rated_tests;
     }
 
     public function getJWTIdentifier()

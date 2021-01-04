@@ -13,7 +13,7 @@ class QuestionShow extends React.Component {
         const { question, type } = this.props;
         
         return (
-            <div className="card shadow mb-4">
+            <div className="card-bt mb-4">
                 <div className="card-header py-3">
                     <h6 className="m-0 font-weight-bold text-primary">Question {question.id}</h6>
                 </div>

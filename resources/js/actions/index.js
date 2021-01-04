@@ -1,6 +1,12 @@
 import * as types from '../constants';
 import * as API from '../ulties/api';
 
+export const resetAllState = () => {
+    return {
+        type: types.RESET_ALL_STATE
+    }
+}
+
 export const status = () => {
     return {
         type: types.TOGGLE_STATUS
@@ -51,5 +57,14 @@ export const setFlassMessage = (content, status, duration) => {
 export const freeFlashMessage = () => {
     return {
         type: types.FREE_FLASH_MESSAGE
+    }
+}
+
+export const setNewNotifications = new_notifications => {
+    return {
+        type: types.SET_NEW_NOTIFICATIONS,
+        payload: {
+            new_notifications
+        }
     }
 }

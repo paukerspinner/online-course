@@ -21,6 +21,17 @@ export const login = (email, password) => {
     })
 }
 
+export const logout = () => {
+    Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
+    return new Promise((resolve, reject) => {
+        Axios.post('/api/v1/logout').then(res => {
+            resolve(res);
+        }).catch(err => {
+            reject(err);
+        })
+    })
+}
+
 export const checkAuthenticatedToken = () => {
     Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
     return new Promise((resolve, reject) => {
@@ -36,6 +47,17 @@ export const requestUpLevel = () => {
     Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
     return new Promise((resolve, reject) => {
         Axios.get('/api/v1/users/up-level').then(res => {
+            resolve(res);
+        }).catch(err => {
+            reject(err);
+        })
+    })
+}
+
+export const requestDownLevel = () => {
+    Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
+    return new Promise((resolve, reject) => {
+        Axios.get('/api/v1/users/down-level').then(res => {
             resolve(res);
         }).catch(err => {
             reject(err);
@@ -210,10 +232,132 @@ export const getRecommendedMaterials = () => {
     })
 }
 
+export const getFailModulesInExam = () => {
+    Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
+    return new Promise((resolve, reject) => {
+        Axios.get('/api/v1/materials/fail-modules-in-exam').then(res => {
+            resolve(res);
+        }).catch(err => {
+            reject(err);
+        })
+    })
+}
+
 export const getBlogs = () => {
     Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
     return new Promise((resolve, reject) => {
         Axios.get('/api/v1/blogs').then(res => {
+            resolve(res);
+        }).catch(err => {
+            reject(err);
+        })
+    })
+}
+
+export const getBlog = (blog_id) => {
+    Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
+    return new Promise((resolve, reject) => {
+        Axios.get(`/api/v1/blogs/${blog_id}`).then(res => {
+            resolve(res);
+        }).catch(err => {
+            reject(err);
+        })
+    })
+}
+
+export const postBlogs = (title, content) => {
+    Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
+    return new Promise((resolve, reject) => {
+        Axios.post('/api/v1/blogs', { title, content }).then(res => {
+            resolve(res);
+        }).catch(err => {
+            reject(err);
+        })
+    })
+}
+
+export const deleteBlog = id => {
+    Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
+    return new Promise((resolve, reject) => {
+        Axios.delete(`/api/v1/blogs/${id}/`).then(res => {
+            resolve(res);
+        }).catch(err => {
+            reject(err);
+        })
+    })
+}
+
+
+export const getCommentsOfBlog = blog_id => {
+    Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
+    return new Promise((resolve, reject) => {
+        Axios.get(`/api/v1/blogs/${blog_id}/comments`).then(res => {
+            resolve(res);
+        }).catch(err => {
+            reject(err);
+        })
+    })
+}
+
+export const postCommentToBlog = (blog_id, comment) => {
+    Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
+    return new Promise((resolve, reject) => {
+        Axios.post(`/api/v1/blogs/${blog_id}/comments`, { comment }).then(res => {
+            resolve(res);
+        }).catch(err => {
+            reject(err);
+        })
+    })
+}
+
+export const deleteComment = id => {
+    Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
+    return new Promise((resolve, reject) => {
+        Axios.delete(`/api/v1/comments/${id}/`).then(res => {
+            resolve(res);
+        }).catch(err => {
+            reject(err);
+        })
+    })
+}
+
+export const postNotificationsSendAll = (title, content) => {
+    Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
+    return new Promise((resolve, reject) => {
+        Axios.post('/api/v1/notifications/send-all', { title, content }).then(res => {
+            resolve(res);
+        }).catch(err => {
+            reject(err);
+        })
+    })
+}
+
+export const getMyNotifications = params => {
+    Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
+    return new Promise((resolve, reject) => {
+        Axios.get('/api/v1/my-notifications', { params }).then(res => {
+            resolve(res);
+        }).catch(err => {
+            reject(err);
+        })
+    })
+}
+
+export const getMyNotification = id => {
+    Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
+    return new Promise((resolve, reject) => {
+        Axios.get(`/api/v1/my-notifications/${id}`).then(res => {
+            resolve(res);
+        }).catch(err => {
+            reject(err);
+        })
+    })
+}
+
+export const updateMyNotification = (id, data) => {
+    Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
+    return new Promise((resolve, reject) => {
+        Axios.put(`/api/v1/my-notifications/${id}`, data).then(res => {
             resolve(res);
         }).catch(err => {
             reject(err);
@@ -232,10 +376,43 @@ export const getUsers = filter_conditions => {
     })
 }
 
-export const getUser = user_id => {
+export const getTranscript = user_id => {
     Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
     return new Promise((resolve, reject) => {
-        Axios.get(`/api/v1/users/${user_id}`).then(res => {
+        Axios.get(`/api/v1/transcripts/${user_id}`).then(res => {
+            resolve(res);
+        }).catch(err => {
+            reject(err);
+        })
+    })
+}
+
+export const getMyTranscript = () => {
+    Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
+    return new Promise((resolve, reject) => {
+        Axios.get('/api/v1/transcripts/mine').then(res => {
+            resolve(res);
+        }).catch(err => {
+            reject(err);
+        })
+    })
+}
+
+export const getProfile = user_id => {
+    Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
+    return new Promise((resolve, reject) => {
+        Axios.get(`/api/v1/profiles/${user_id}`).then(res => {
+            resolve(res);
+        }).catch(err => {
+            reject(err);
+        })
+    })
+}
+
+export const updateProfile = (user_id, data) => {
+    Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
+    return new Promise((resolve, reject) => {
+        Axios.put(`/api/v1/profiles/${user_id}`, data).then(res => {
             resolve(res);
         }).catch(err => {
             reject(err);
