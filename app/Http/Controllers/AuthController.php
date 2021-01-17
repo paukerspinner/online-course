@@ -10,6 +10,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 use App\Http\Requests\RegisterRequest;
 use App\Http\Services\AuthService;
+use App\User;
 
 use App\Http\Resources\User\UserResource;
 
@@ -17,6 +18,7 @@ class AuthController extends Controller
 {
     public function __construct() {
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('role:admin')->only('resetPassword');
     }
 
     public function login(Request $request) {
@@ -94,6 +96,49 @@ class AuthController extends Controller
 
     public function refresh() {
         return $this->respondWithToken($this->guard()->refresh());
+    }
+
+    public function changePassword(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'password' => ['required', 'string'],
+            'new_password' => ['required', 'string', 'min:8'],
+            'confirm' => ['required', 'same:new_password']
+        ]);
+        
+        if($validator->fails()){
+            return response()->json([
+                'error_message' => 'New password or password confirm is invalid, please try again!'
+            ], 400);
+            //return response()->json($validator->errors(), 400);
+        }
+
+        $password = $request->get('password');
+        if (!auth()->validate(['email' => auth()->user()->email, 'password' => $password])) {
+            return response()->json([
+                'error_message' => 'Password is not correct!'
+            ], 400);
+        } else {
+            $new_password = $request->get('new_password');
+            auth()->user()->update([
+                'password' => bcrypt($new_password)
+            ]);
+            auth()->logout();
+            return response()->json([
+                'message' => 'You have successfully changed your password'
+            ], 200);
+        }
+    }
+
+    public function resetPassword(Request $request) {
+        $user_id = $request->input('user_id');
+        $user = User::find($user_id);
+        $new_password = AuthService::generatePassword();
+        $user->update([
+            'password' => bcrypt($new_password)
+        ]);
+        return response()->json([
+            'password' => $new_password
+        ], 200);
     }
 
     // protected function respondWithToken($token) {

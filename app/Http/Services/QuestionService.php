@@ -46,10 +46,6 @@ class QuestionService
             ]);
         }
     }
-    
-    public static function getQuestions() {
-        return Question::orderBy('section_id')->get();
-    }
 
     public static function getQuestion($id) {
         return Question::find($id);

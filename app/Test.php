@@ -25,7 +25,7 @@ class Test extends Model
     const QUES_NUM_FOR_MOD = 10;
 
     protected $fillable = ['user_id', 'section_id', 'level', 'grade', 'started_at', 'finished_at'];
-    protected $hidden = ['created_at', 'updated_at'];
+    protected $hidden = ['created_at'];
     protected $appends = ['completion_time'];
 
     public function testQuestions() {

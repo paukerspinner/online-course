@@ -2,15 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Question;
+
 use Illuminate\Http\Request;
 use App\Http\Services\QuestionService;
+use App\Http\Resources\Question\QuestionAnswerCollection;
+use App\Http\Resources\Question\QuestionAnswerResource;
 
 class QuestionController extends Controller
 {
+    public function __construct() {
+        $this->middleware('role:admin');
+    }
+
     public function index()
     {
-        $questions = QuestionService::getQuestions();
-        return response()->json($questions);
+        $questions = Question::orderBy('section_id')->orderBy('level')->get();
+        $questions_res = new QuestionAnswerCollection($questions);
+        return response()->json([
+            'questions' => $questions_res
+        ], 200);
     }
 
     public function store(Request $request)
@@ -54,6 +65,9 @@ class QuestionController extends Controller
 
     public function destroy($id)
     {
-        //
+        $question = Question::find($id)->delete();
+        return response()->json([
+            'message' => 'You have deleted a question'
+        ], 200);
     }
 }

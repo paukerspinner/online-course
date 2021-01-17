@@ -9,6 +9,20 @@ use Config;
 
 class UserService
 {
+    public static function setLevel($grade) {
+        $level = null;
+        if ($grade > Test::GRADE_EXCELLENT) {
+            $level = Config::get('constants.HARD_LEVEL');
+        } else if ($grade > Test::GRADE_GOOD) {
+            $level = Config::get('constants.MEDIUM_LEVEL');
+        } else if ($grade >= Test::GRADE_PASS) {
+            $level = Config::get('constants.EASY_LEVEL');
+        }
+        auth()->user()->update([
+            'level' => $level
+        ]);
+    }
+
     public static function updateLevel($grade) {
         $new_level = auth()->user()->level;
 
@@ -31,10 +45,12 @@ class UserService
                 }
             }
         } else {
-            if ($grade <= Test::GRADE_GOOD && $new_level != Config::get('constants.EASY_LEVEL')) {
-                $new_level -= 1;
-            } else if($grade > Test::GRADE_EXCELLENT && $new_level != Config::get('constants.HARD_LEVEL')) {
-                $new_level += 1;
+            if ($grade <= Test::GRADE_GOOD) {
+                $new_level = Config::get('constants.EASY_LEVEL');
+            } else if($grade <= Test::GRADE_EXCELLENT) {
+                $new_level = Config::get('constants.MEDIUM_LEVEL');
+            } else {
+                $new_level = Config::get('constants.HARD_LEVEL');
             }
         }
         auth()->user()->update([

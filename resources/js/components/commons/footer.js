@@ -9,8 +9,7 @@ class Footer extends React.Component {
                         <div className="col-lg-4 col-md-6 col-sm-7">
                             <div className="footer-widget">
                                 <h6 className="mt-4 font-weight-bold">Ocourse</h6>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                    cilisis.</p>
+                                <p>lsf;lksd;fk;sdfk</p>
                             </div>
                         </div>
                         <div className="col-lg-2 col-md-3 col-sm-5">
@@ -45,11 +44,10 @@ class Footer extends React.Component {
                                     </div>
                                 </form>
                                 <div className="footer-contact">
-                                    <a href="https://www.facebook.com/hoangcongkinh1108/" className="btn btn-circle btn-social"><i className="fab fa-facebook-f"></i></a>
-                                    <a href="#" className="btn btn-circle btn-social"><i className="fab fa-twitter"></i></a>
-                                    <a href="#" className="btn btn-circle btn-social"><i className="fab fa-youtube"></i></a>
-                                    <a href="#" className="btn btn-circle btn-social"><i className="fab fa-instagram"></i></a>
-                                    <a href="#" className="btn btn-circle btn-social"><i className="fab fa-pinterest"></i></a>
+                                    <a href="https://www.facebook.com/hoangcongkinh1108/" target="_blank" className="btn btn-circle btn-social ml-2"><i className="fab fa-facebook-f"></i></a>
+                                    <a href="#" target="_blank" className="btn btn-circle btn-social ml-2"><i className="fab fa-vk"></i></a>
+                                    <a href="#" target="_blank" className="btn btn-circle btn-social ml-2"><i className="fab fa-twitter"></i></a>
+                                    <a href="#" target="_blank" className="btn btn-circle btn-social ml-2"><i className="fab fa-youtube"></i></a>
                                 </div>
                             </div>
                         </div>

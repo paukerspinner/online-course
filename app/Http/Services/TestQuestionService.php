@@ -43,12 +43,8 @@ class TestQuestionService
     }
 
     protected static function getRandomQuestionsFromBank($question_bank, $required_number) {
-        $question_bank_size = count($question_bank);
-        $selected_questions = [];
-        for ($i = 0; $i < $required_number; $i++) {
-            shuffle($question_bank);
-            $selected_questions[] = array_pop($question_bank);
-        }
+        shuffle($question_bank);
+        $selected_questions = array_slice($question_bank, 0, $required_number);
         return $selected_questions;
     }
 
@@ -60,7 +56,8 @@ class TestQuestionService
         $all_modules = Section::all()->where('is_module', true);
         foreach ($all_modules as $module) {
             $section_id = $module->id;
-            $question_bank = Question::where('section_id', $section_id)->get()->map->only('id')->all();
+            $level = auth()->user()->tests()->where('section_id', $section_id)->get()->last()->level;
+            $question_bank = Question::where('section_id', $section_id)->where('level', $level)->get()->map->only('id')->all();
             $selected_questions = (new static)::getRandomQuestionsFromBank($question_bank, Test::QUES_NUM_PER_MOD_FOR_EXAM);
             foreach($selected_questions as $selected_question) {
                 $test_question = TestQuestion::create([

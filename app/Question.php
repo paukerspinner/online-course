@@ -15,4 +15,8 @@ class Question extends Model
     function answers() {
         return $this->hasMany('App\Answer', 'question_id');
     }
+
+    function section() {
+        return $this->belongsTo('App\Section', 'section_id');
+    }
 }

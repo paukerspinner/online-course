@@ -54,7 +54,11 @@ class TestService
     public static function finishPendingTest() {
         $pending_test = (new static)::getPendingTest();
         $grade = (new static)::calculateScore($pending_test->id);
-        UserService::updateLevel($grade);
+        if ($pending_test->section_id == 1) {
+            UserService::setLevel($grade);
+        } else {
+            UserService::updateLevel($grade);
+        }
         $pending_test->update([
             'grade' => $grade,
             'finished_at' => Carbon::now()
@@ -108,9 +112,6 @@ class TestService
     }
 
     public static function getBallOfTest($test) {
-        if ($test->section_id == 3) {
-            // dd($test);
-        }
         $score = 0;
         if ($test->is_exam) {
             $score = $test->grade * 0.2;

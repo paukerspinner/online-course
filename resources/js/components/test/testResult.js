@@ -1,6 +1,7 @@
 import React from 'react';
 import { QUESTION_LEVEL as TEST_LEVEL, TEST_GRADE, USER_LEVEL } from '../../constants';
 import { stringOfTestLevel } from '../../ulties/string';
+import moment from 'moment'
 
 class TestResult extends React.Component {
     constructor(props) {
@@ -12,11 +13,17 @@ class TestResult extends React.Component {
         return (
             <div className="row no-gutters align-items-center" key={test.id}>
                 <div className="col mr-2">
-                    <div className="text-xs font-weight-bold text-info text-uppercase mb-1">
-                        <span>{test.section.title}</span>
-                        <span className="float-right">
-                            {stringOfTestLevel(test.level)}
+                    <div className="mb-2">
+                        <span className="text-xs font-weight-bold text-info text-uppercase">{test.section.title} 
+                        {
+                            test.section.is_module && (
+                                <span>
+                                    - {stringOfTestLevel(test.level)}
+                                </span>
+                            )
+                        }
                         </span>
+                        <small className="float-right"> {moment(test.updated_at).format('lll')} </small>
                     </div>
                     <div className="row no-gutters align-items-center">
                         <div className="col-3">

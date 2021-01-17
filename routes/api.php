@@ -26,6 +26,8 @@ Route::group(['prefix' => 'v1'], function() {
     Route::get('resendCode', 'AuthController@resendCode');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
+    Route::post('change-password', 'AuthController@changePassword');
+    Route::post('reset-password', 'AuthController@resetPassword');
 
     Route::get('users/up-level', 'User\UserController@requestUpLevel');
     Route::get('users/down-level', 'User\UserController@requestDownLevel');

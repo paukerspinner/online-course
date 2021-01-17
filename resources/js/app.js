@@ -12,6 +12,8 @@ import FlassMessage from './components/commons/flassMessage';
 
 import Login from './components/auth/login';
 import Register from './components/auth/register';
+import ChangePassword from './components/auth/changePassword';
+
 import ProfileShow from './page/profile/show';
 import HomePage from './page/homePage';
 import NotFoundPage from './page/notFound';
@@ -60,6 +62,7 @@ class App extends React.Component {
                                     <Route path="/" exact component={HomePage} />
                                     <Route path="/login" exact component={Login} />
                                     <Route path="/register" exact component={Register} />
+                                    <AuthRoute path="/change-password" exact component={ChangePassword} />
                                     <AuthRoute path="/profile" exact component={ProfileShow} />
                                     <AuthRoute path="/course" exact component={CoursePage} />
                                     <AuthRoute path="/course/test" exact component={TestPage}/>

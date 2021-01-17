@@ -18,7 +18,7 @@ class QuestionsManagementPage extends React.Component {
     componentDidMount() {
         API.getQuestions().then(res => {
             this.setState({
-                questions: res.data
+                questions: res.data.questions.data
             })
         })
     }
@@ -54,7 +54,7 @@ class QuestionsManagementPage extends React.Component {
                             <React.Fragment key={idx}>
                                 <tr className="text-center">
                                     <td>{idx+1}</td>
-                                    <td>{question.section_id}</td>
+                                    <td>{question.section.title}</td>
                                     <td>{question.level == QUESTION_LEVEL.EASY ? 'Easy' : question.level == QUESTION_LEVEL.MEDIUM? 'Medium' : 'Hard'}</td>
                                     <td>{question.type == QUESTION_TYPE.MULTIPLE_CHOICE? 'Multiple Choice' : 'Single Choice'}</td>
                                     <td>

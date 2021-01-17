@@ -150,10 +150,10 @@ class ProgressPage extends React.Component {
                 </div>
 
                 <div className="row">
-                    <div className="col-lg-4 mt-4">
+                    <div className="col-xl-4 col-md-8 offset-md-2 offset-xl-0 mt-4">
                         <Transcript transcript={transcript.data} fullname={transcript.fullname}/>
                     </div>
-                    <div className="col mt-4">
+                    <div className="col-xl-8 col-md-8 offset-md-2 offset-xl-0 mt-4">
                         <div className="card-bt hover-shadow h-100">
                             <div className="card-header bg-primary">
                                 <h5 className="m-0 font-weight-bold text-light">
@@ -169,7 +169,7 @@ class ProgressPage extends React.Component {
                                                 { tests[idx+1] != undefined && test.section_id != tests[idx+1].section_id ? (<hr/>) : (<br/>) }
                                             </div>
                                         )
-                                    }) : 'Student has not completed any test.'
+                                    }) : 'You have not completed any test.'
                                 }
                             </div>
                         </div>

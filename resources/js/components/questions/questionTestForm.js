@@ -147,8 +147,8 @@ class QuestionTestForm extends React.Component {
 }
 
 const renderCorrection = answer => {
-    if (answer.is_corrected != answer.is_selected) {
-        return <span className="text-danger"> X</span>
+    if (answer.is_corrected) {
+        return <i className="fas fa-check text-success pl-2" title="Correct answer"></i>
     };
 }
 

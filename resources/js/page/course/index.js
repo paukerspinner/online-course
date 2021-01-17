@@ -50,9 +50,6 @@ class CoursePage extends React.Component {
                                                     </span>
                                                 </div>
                                                 <div className="col-lg-4">
-                                                    {/* <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                        Earnings (Monthly)</div>
-                                                    <div className="h5 mb-0 font-weight-bold text-gray-800">$40,000</div> */}
                                                     <div className="pl-2 pt-2">
                                                         Updated: {moment(material.updated_at).format('DD/MM/YYYY')}
                                                     </div>

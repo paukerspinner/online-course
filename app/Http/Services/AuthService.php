@@ -75,4 +75,13 @@ class AuthService
         }
         return $verification_code;
     }
+
+    public static function generatePassword($length = 8) {
+        $password = '';
+        $alphabet = '0123456789';
+        for ($i = 0; $i < $length; $i++) {
+            $password .= $alphabet[rand(0, 9)];
+        }
+        return $password;
+    }
 }

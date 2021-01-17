@@ -1,6 +1,7 @@
 import React from 'react';
 import * as API from '../../ulties/api'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { store } from '../../'
 import * as actions from '../../actions'
 
@@ -80,6 +81,9 @@ class ProfileShow extends React.Component {
                                 <h6 className="m-0 font-weight-bold">Profile</h6>
                             </div>
                             <div className="card-body">
+                                <div className="text-right">
+                                    <Link to="/change-password" className="btn btn-sm btn-secondary">Change password</Link>
+                                </div>
                                 <form onSubmit={this.handleSubmit}>
                                     <div className="form-group">
                                         <label htmlFor="email">Email</label>

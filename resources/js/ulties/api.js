@@ -21,6 +21,17 @@ export const login = (email, password) => {
     })
 }
 
+export const changePassword = (password, new_password, confirm) => {
+    Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
+    return new Promise((resolve, reject) => {
+        Axios.post('/api/v1/change-password', {password, new_password, confirm}).then(res => {
+            resolve(res);
+        }).catch(err => {
+            reject(err);
+        })
+    })
+}
+
 export const logout = () => {
     Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
     return new Promise((resolve, reject) => {

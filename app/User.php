@@ -61,7 +61,7 @@ class User extends Authenticatable implements JWTSubject
         if ($completed_course) {
             if ($this->rating > Test::GRADE_EXCELLENT) return 'excellent';
             if ($this->rating > Test::GRADE_GOOD) return 'good';
-            if ($this->rating >= Test::GRAE_PASS) return 'satisfatory';
+            if ($this->rating >= Test::GRADE_PASS) return 'satisfatory';
         } else {
             return null;
         }
