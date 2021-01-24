@@ -6,31 +6,22 @@ class Footer extends React.Component {
             <footer className="footer">
                 <div className="container">
                     <div className="row">
-                        <div className="col-lg-4 col-md-6 col-sm-7">
+                        <div className="col-lg-6 col-md-9 col-sm-11">
                             <div className="footer-widget">
                                 <h6 className="mt-4 font-weight-bold">Ocourse</h6>
-                                <p>lsf;lksd;fk;sdfk</p>
+                                <p className="m-0">Adress: Saint Peterburg, Kronvetskiy avenue, 49</p>
+                                <p className="m-0">Тel: +79697299090</p>
+                                <p className="m-0">Whatsapp: +79697299090</p>
+                                <p className="m-0">E-mail: hoangkinh1811@gmail.com</p>
                             </div>
                         </div>
                         <div className="col-lg-2 col-md-3 col-sm-5">
                             <div className="footer-widget">
                                 <h6 className="mt-4 font-weight-bold">Quick links</h6>
                                 <ul>
-                                    <li><a href="#">About</a></li>
-                                    <li><a href="#">Blogs</a></li>
-                                    <li><a href="#">Contact</a></li>
-                                    <li><a href="#">FAQ</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="col-lg-2 col-md-3 col-sm-4">
-                            <div className="footer-widget">
-                                <h6 className="mt-4 font-weight-bold">Account</h6>
-                                <ul>
-                                    <li><a href="#">My Account</a></li>
-                                    <li><a href="#">Orders Tracking</a></li>
-                                    <li><a href="#">Checkout</a></li>
-                                    <li><a href="#">Wishlist</a></li>
+                                    <li><a href="/blogs">Blogs</a></li>
+                                    <li><a href="/#course-target">Targets</a></li>
+                                    <li><a href="/#aboutus">About Us</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -45,7 +36,7 @@ class Footer extends React.Component {
                                 </form>
                                 <div className="footer-contact">
                                     <a href="https://www.facebook.com/hoangcongkinh1108/" target="_blank" className="btn btn-circle btn-social ml-2"><i className="fab fa-facebook-f"></i></a>
-                                    <a href="#" target="_blank" className="btn btn-circle btn-social ml-2"><i className="fab fa-vk"></i></a>
+                                    <a href="https://vk.com/id455773192?fbclid=IwAR2garWECjlIQcZFZhpZQyJKp-S4DlbOm2G8hZNh6LDkNd-NekjTKpRrUM4" target="_blank" className="btn btn-circle btn-social ml-2"><i className="fab fa-vk"></i></a>
                                     <a href="#" target="_blank" className="btn btn-circle btn-social ml-2"><i className="fab fa-twitter"></i></a>
                                     <a href="#" target="_blank" className="btn btn-circle btn-social ml-2"><i className="fab fa-youtube"></i></a>
                                 </div>

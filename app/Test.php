@@ -22,7 +22,7 @@ class Test extends Model
     const GRADE_EXCELLENT = 90;
 
     const QUES_NUM_PER_MOD_FOR_EXAM = 5;
-    const QUES_NUM_FOR_MOD = 10;
+    const QUES_NUM_FOR_MOD = 15;
 
     protected $fillable = ['user_id', 'section_id', 'level', 'grade', 'started_at', 'finished_at'];
     protected $hidden = ['created_at'];

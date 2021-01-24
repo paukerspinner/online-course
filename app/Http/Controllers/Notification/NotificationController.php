@@ -73,7 +73,11 @@ class NotificationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $notification = Notification::find($id);
+        $notification->delete();
+        return response()->json([
+            'message' => 'You have successfully deleted a notification.'
+        ], 200);
     }
 
     public function sendAll(Request $request) {

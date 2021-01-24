@@ -57,7 +57,12 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $user->delete();
+        return response()->json([
+            'message' => 'You have successfully deleted a user',
+            'user' => $user
+        ], 200);
     }
 
     public function requestUpLevel() {

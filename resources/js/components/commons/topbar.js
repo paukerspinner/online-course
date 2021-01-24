@@ -55,7 +55,9 @@ class Topbar extends React.Component {
                 <button id="sidebarToggleTop" className="btn btn-link d-md-none rounded-circle mr-3">
                     <i className="fa fa-bars"></i>
                 </button>
-                <a href="/" className="nav-link topbar-logo">OCourse</a>
+                <a href="/" className="nav-link topbar-logo">
+                    <img src="/images/logo/logo-blue.png" width="100px" alt=""/>
+                </a>
                 <ul className="navbar-nav">
                     <li><Link to="/course" className="nav-link">Course</Link></li>
                     <li><Link to="/course/progress" className="nav-link">Progress</Link></li>
@@ -124,8 +126,8 @@ class Topbar extends React.Component {
                                 <Link className="nav-link" to="/login">
                                     <span className="mr-2 d-none d-lg-inline text-gray-600 small">
                                         Login&nbsp;
-                                        <i className="fas fa-sign-in-alt small" aria-hidden="true"/>
                                     </span>
+                                    <i className="fas fa-sign-in-alt small" aria-hidden="true"/>
                                 </Link>
                             </li>
                         </ul>

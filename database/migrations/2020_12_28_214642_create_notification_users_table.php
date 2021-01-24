@@ -18,6 +18,8 @@ class CreateNotificationUsersTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('notification_id');
             $table->boolean('is_read')->default(false);
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('notification_id')->references('id')->on('notifications')->onDelete('cascade');
             $table->timestamps();
         });
     }

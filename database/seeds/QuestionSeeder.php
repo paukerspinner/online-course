@@ -21,14 +21,37 @@ class QuestionSeeder extends Seeder
         //     'level' => 1
         // ]);
 
-        for ($i = 1; $i <= 9 * 30; $i++) {
+        // for ($i = 1; $i <= 9 * 30; $i++) {
+        //     Question::create([
+        //         'id' => $i,
+        //         'section_id' => floor(($i-1)/30) + 1,
+        //         'text' => "<p>Text question</p>",
+        //         'type' => rand(0, 1),
+        //         'level' => ($i-1)%30 >= 20 ? 2 : (($i-1)%30 >= 10 ? 1 : 0)
+        //     ]);
+        // }
+
+        for ($i=0; $i < 20; $i++) {
             Question::create([
-                'id' => $i,
-                'section_id' => floor(($i-1)/30) + 1,
-                'text' => "<p>Question number $i</p>",
+                'section_id' => 1,
+                'text' => "<p>Text question</p>",
                 'type' => rand(0, 1),
-                'level' => ($i-1)%30 >= 20 ? 2 : (($i-1)%30 >= 10 ? 1 : 0)
+                'level' => 1
             ]);
+        }
+
+        for ($i=0; $i < 8; $i++) { 
+            $section_id = $i + 2;
+            for ($level=0; $level < 3; $level++) { 
+                for ($j=0; $j < 20; $j++) { 
+                    Question::create([
+                        'section_id' => $section_id,
+                        'text' => "<p>Text question</p>",
+                        'type' => rand(0, 1),
+                        'level' => $level
+                    ]);
+                }
+            }
         }
     }
 }

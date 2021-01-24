@@ -9,7 +9,9 @@ class Sidebar extends React.Component {
 
                 <br/>
                 <a className="sidebar-brand d-flex align-items-center justify-content-center" href="/">
-                    <div className="mx-3">OCourse <sup>*</sup></div>
+                    <div className="sidebar-logo">
+                        <img src="/images/logo/logo.png" style={{ width: '150px'}} alt=""/>
+                    </div>
                 </a>
                 <br/>
 
@@ -82,13 +84,6 @@ class Sidebar extends React.Component {
                 </li>
 
                 <hr className="sidebar-divider d-none d-md-block" />
-
-                <div className="card bg-primary border-0 text-light">
-                    <div className="card-body text-center">
-                        <p className="text-center mb-2"><strong>OCOURSE</strong> is developed by Pauker. Click the button below for more infomation</p>
-                        <a className="btn btn-success btn-sm" href="https://www.facebook.com/xuancanh.pham.165/">Contact !</a>
-                    </div>
-                </div>
 
             </ul>
         )

@@ -11070,7 +11070,7 @@ a:hover {
 }
 
 #course-banner {
-  background: url("https://cdn.csu.edu.au/__data/assets/image/0006/2822424/banner-m-cyber-security.jpg");
+  background: url("/images/bg/course_banner.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -11160,7 +11160,7 @@ a:hover {
 .content p {
   margin: 10px auto;
   display: block;
-  max-width: 600px;
+  max-width: 800px;
 }
 
 .footer {

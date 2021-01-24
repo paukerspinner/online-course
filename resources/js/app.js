@@ -7,35 +7,35 @@ import * as actions from './actions';
 import Topbar from './components/commons/topbar';
 import Sidebar from './components/commons/sidebar';
 import Footer from './components/commons/footer';
-import AuthRoute from './components/auth/authRoute';
+import AuthRoute from './routes/authRoute';
 import FlassMessage from './components/commons/flassMessage';
 
-import Login from './components/auth/login';
-import Register from './components/auth/register';
-import ChangePassword from './components/auth/changePassword';
+import Login from './components/auth/loginPage';
+import Register from './components/auth/registerPage';
+import ChangePassword from './components/auth/changePasswordPage';
 
-import ProfileShow from './page/profile/show';
-import HomePage from './page/homePage';
-import NotFoundPage from './page/notFound';
-import QuesitonCreatePage from './page/management/questions/create';
-import QuestionEditPage from './page/management/questions/edit';
-import QuestionsManagementPage from './page/management/questions'
-import CoursePage from './page/course';
-import TestPage from './page/course/test';
-import TestingPage from './page/course/testing';
-import ProgressPage from './page/course/progress';
-import MaterialsManagementPage from './page/management/materials';
-import MaterialCreatePage from './page/management/materials/create';
-import MaterialEditPage from './page/management/materials/edit';
-import BlogPage from './page/blog';
-import StudentsManagemntPage from './page/management/students';
-import StudentResultPage from './page/management/students/result';
-import UsersManagementPage from './page/management/users';
-import BlogCreate from './page/blog/create';
-import BlogShow from './page/blog/show';
-import  NotificationPage from './page/notification';
-import NotificationShow from './page/notification/show';
-import NotificationCreate from './page/management/notification/create';
+import ProfileShow from './components/profile/showPage';
+import HomePage from './components/home/indexPage';
+import NotFoundPage from './components/errors/notFound';
+import QuesitonCreatePage from './components/management/questions/createPage';
+import QuestionEditPage from './components/management/questions/editPage';
+import QuestionsManagementPage from './components/management/questions/indexPage'
+import CoursePage from './components/course/indexPage';
+import TestPage from './components/course/testPage';
+import TestingPage from './components/course/testingPage';
+import ProgressPage from './components/course/progressPage';
+import MaterialsManagementPage from './components/management/materials/indexPage';
+import MaterialCreatePage from './components/management/materials/createPage';
+import MaterialEditPage from './components/management/materials/editPage';
+import BlogPage from './components/blog/indexPage';
+import StudentsManagemntPage from './components/management/students/indexPage';
+import StudentResultPage from './components/management/students/resultPage';
+import UsersManagementPage from './components/management/users/indexPage';
+import BlogCreate from './components/blog/createPage';
+import BlogShow from './components/blog/showPage';
+import  NotificationPage from './components/notification/indexPage';
+import NotificationShow from './components/notification/showPage';
+import NotificationCreate from './components/management/notification/createPage';
 
 class App extends React.Component {
     componentDidMount() {
