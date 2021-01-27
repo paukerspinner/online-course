@@ -31,7 +31,7 @@ class MaterialsManagementPage extends React.Component {
                         <div className="text-right">
                             <Link to="/management/materials/create" className="btn btn-primary mt-4">Create New Material</Link>
                         </div>
-                        <table className="table table-hover mt-4">
+                        <table className="table table-striped mt-4">
                             <thead>
                                 <tr className="text-center">
                                     <th scope="col">№</th>

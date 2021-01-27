@@ -9,7 +9,7 @@ class AboutUs extends React.Component {
     render() {
         return (
             <div id="aboutus" className="container-fluid content">
-                <h1>About Us</h1>
+                <h1 className="mb-0">About Us</h1>
                 <p>A distinctive feature of our company is the high speed and quality of project fulfillment. This is achieved through the use of advanced technologies and the experience of a stable, friendly team of professionals in the education process.</p>
                 <div className="row justify-content-md-center">
                     <div className="col-sm-12 col-lg-3 mb-2">

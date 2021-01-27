@@ -22,7 +22,7 @@ class UsersManagementPage extends React.Component {
                 <BreadCrumb breadcrumb_items={breadcrumb_items}/>
                 <div className="row">
                     <div className="col">
-                    <table className="table table-hover mt-4">
+                    <table className="table table-striped mt-4">
                     <thead>
                         <tr className="text-center">
                             <th scope="col">№</th>

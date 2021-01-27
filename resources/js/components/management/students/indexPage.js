@@ -21,7 +21,7 @@ class StudentsManagementPage extends React.Component {
         return (
             <div className="container mt-4">
                 <BreadCrumb breadcrumb_items={breadcrumb_items}/>
-                <table className="table table-hover mt-4">
+                <table className="table table-striped mt-4">
                     <thead>
                         <tr className="text-center">
                             <th scope="col">№</th>

@@ -141,15 +141,13 @@
 
 .topbar.navbar-light {
     .navbar-nav {
-        .nav-item {
-            .nav-link {
+        .nav-link {
+            color: $gray-800;
+            &:hover {
+                color: $gray-600;
+            }
+            &:active {
                 color: $gray-400;
-                &:hover {
-                    color: $gray-500;
-                }
-                &:active {
-                    color: $gray-600;
-                }
             }
         }
     }

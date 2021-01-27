@@ -32,6 +32,10 @@
         }
         .card-text {
             padding-right: 1em;
+            width: 100%;
+            h4 {
+                text-align: center;
+            }
         }
     }
 }
