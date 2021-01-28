@@ -12,7 +12,7 @@ class Transcript extends React.Component {
                 </div>
                 <div className="card-body">
                     <span>Student: </span><b>{ fullname }</b>
-                    <table className="table table-hover mt-4 text-center">
+                    <table className="table table-striped mt-4 text-center">
                         <thead>
                             <tr>
                                 <th scope="col">Module</th>

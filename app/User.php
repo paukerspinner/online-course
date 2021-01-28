@@ -48,7 +48,7 @@ class User extends Authenticatable implements JWTSubject
         foreach ($this->transcript as $section_result) {
             $rating += $section_result->rating;
         }
-        return round($rating, 2);
+        return round($rating, 0);
     }
 
     public function getCompletedCourseAttribute() {
@@ -61,7 +61,7 @@ class User extends Authenticatable implements JWTSubject
         if ($completed_course) {
             if ($this->rating > Test::GRADE_EXCELLENT) return 'excellent';
             if ($this->rating > Test::GRADE_GOOD) return 'good';
-            if ($this->rating >= Test::GRADE_PASS) return 'satisfatory';
+            if ($this->rating >= Test::GRADE_PASS) return 'average';
         } else {
             return null;
         }
@@ -79,7 +79,7 @@ class User extends Authenticatable implements JWTSubject
                 $test_rating = (object)([
                     'section_id' => $section->id,
                     'section_label' => $section->title,
-                    'rating' => round($rating, 2)
+                    'rating' => round($rating, 0)
                 ]);
             } else {
                 $test_rating = (object)([
