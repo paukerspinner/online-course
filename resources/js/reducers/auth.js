@@ -24,7 +24,6 @@ const myReducer = (state = initial_state, action) => {
             return new_state;
 
         case types.FAILURE_LOGIN:
-            console.log(action.payload)
             return new_state;
         
         case types.SUCCESS_CHECK_TOKEN:

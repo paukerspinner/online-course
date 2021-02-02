@@ -50,7 +50,7 @@ class CourseTarget extends React.Component {
                             <div className="card-text">
                                 <h4>Methodical instructions</h4>
                                 <p className="m-0">The system presupposes a rational combination of such types of educational activities as lectures, practical classes, independent work of students, as well as control of the acquired knowledge.
-                                    <a href="https://docs.google.com/document/d/13O-vd5ozlCFLyyH_Ep-zG5j0tiGEHOgX_JJpGFq62qY/edit">Read more</a>
+                                    &nbsp;<a href="https://docs.google.com/document/d/13O-vd5ozlCFLyyH_Ep-zG5j0tiGEHOgX_JJpGFq62qY/edit">Read more >></a>
                                 </p>
                             </div>
                         </div>

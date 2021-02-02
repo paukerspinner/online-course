@@ -57,7 +57,6 @@ class MaterialForm extends React.Component {
         if (file) {
             marerial_data_form.append('file', file);
         }
-        console.log(file)
         // Form Data suports only 2 types: text or file)
         if (this.props.type == 'create') {
             API.addMaterial(marerial_data_form).then(res => {
@@ -72,7 +71,6 @@ class MaterialForm extends React.Component {
             API.updateMaterial(marerial_data_form).then(res => {
                 store.dispatch(actions.setFlassMessage(res.data.message));
                 this.props.history.push('/management/materials');
-                console.log(res.data)
             }).catch(err => {
                 console.log(err.response);
             });

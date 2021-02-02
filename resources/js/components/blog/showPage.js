@@ -33,7 +33,6 @@ class BlogShow extends React.Component {
             this.setState({
                 blog: res.data.blog
             })
-            console.log(res.data)
         });
 
         this.getCommentsOfBlog();
@@ -45,7 +44,6 @@ class BlogShow extends React.Component {
             this.setState({
                 comments: res.data.comments.data
             })
-            console.log(res.data)
         })
     }
     

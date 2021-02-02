@@ -31,7 +31,6 @@ class Register extends React.Component {
             password: this.state.password, 
             confirm: this.state.confirm
         }).then(res => {
-            console.log(res.data)
             this.props.history.push('/login');
         }).catch(err => {
             console.log(err.response)

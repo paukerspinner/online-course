@@ -41,8 +41,6 @@ class NotificationCreate extends React.Component {
             store.dispatch(actions.setFlassMessage(res.data.message));
             this.props.history.push('/notifications')
         })
-
-        console.log(content_HTML)
     }
 
     render() {

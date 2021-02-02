@@ -23,7 +23,6 @@ class TestPage extends React.Component {
             this.setState({
                 test: res.data.test
             });
-            console.log(res.data.test)
         }).catch(err => {
             console.log(err.response)
             if (err.response.status == 403) {

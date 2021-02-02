@@ -30,7 +30,6 @@ class NotificationShow extends React.Component {
 
     getNotification() {
         const { id } = this.props.match.params;
-        console.log('get')
         API.getMyNotification(id).then(res => {
             this.setState({
                 notification: res.data.notification_user

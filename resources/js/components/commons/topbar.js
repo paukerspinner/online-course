@@ -59,9 +59,9 @@ class Topbar extends React.Component {
                     <img src="/images/logo/logo-blue.png" width="100px" alt=""/>
                 </a>
                 <ul className="navbar-nav">
-                    <li><Link to="/course" className="nav-link">Course</Link></li>
-                    <li><Link to="/course/progress" className="nav-link">Progress</Link></li>
-                    <li><Link to="/blogs" className="nav-link">Blog</Link></li>
+                    <li><Link to="/course" className="nav-link"><b>Course</b></Link></li>
+                    <li><Link to="/course/progress" className="nav-link"><b>Progress</b></Link></li>
+                    <li><Link to="/blogs" className="nav-link"><b>Blog</b></Link></li>
                 </ul>
 
                 

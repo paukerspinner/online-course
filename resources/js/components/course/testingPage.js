@@ -60,7 +60,6 @@ class TestingPage extends React.Component {
 
     finishTest() {
         API.finishTest().then(res => {
-            console.log(res.data);
             this.props.history.push('/course/progress');
         })
     }

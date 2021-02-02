@@ -20,7 +20,6 @@ class CoursePage extends React.Component {
         })
 
         API.getMaterials().then(res => {
-            console.log(res.data)
             this.setState({
                 materials: res.data.materials.data
             })

@@ -37,9 +37,8 @@ class BlogCreate extends React.Component {
         API.postBlogs(title, content_HTML).then(res => {
             this.props.history.push('/blogs')
         }).catch(err => {
-            console.log(err.response)
+            
         })
-        console.log(content_HTML)
     }
 
     render() {
