@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, NavLink } from 'react-router-dom';
+import { Route, NavLink, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 class Banner extends React.Component {
@@ -13,7 +13,7 @@ class Banner extends React.Component {
                 <div className="banner-text">
                     <h1>Your course to Success</h1>
                     <p>Our goal is your employment. We have become the system of motivation of employees and teachers to the results of students.</p>
-                    <a href="/course" className="btn btn-primary">Join now</a>
+                    <Link to="/course" className="btn btn-primary">Join now</Link>
                 </div>
             </div>
         );
