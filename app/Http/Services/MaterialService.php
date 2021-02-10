@@ -32,11 +32,15 @@ class MaterialService
             'title' => $material_data['title'],
             'level' => intval($material_data['level']),
         ]);
+        $current_path_file = $material->path;
         if(array_key_exists('file', $material_data)) {
             $path = StorageService::saveMaterialFile($material_data['file']);
             $material->update([
                 'path' => $path
             ]);
+        }
+        if ($current_path_file != 'default.pdf') {
+            StorageService::deleteMaterialFile($current_path_file);
         }
         return $material;
     }
