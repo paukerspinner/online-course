@@ -17,7 +17,7 @@ class AuthorResource extends JsonResource
         $profile = $this->profile;
         return [
             'id' => $this->id,
-            'name' => join([$profile->name, $profile->surname], ' '),
+            'name' => implode(' ', [$profile->name, $profile->surname]),
         ];
     }
 }
