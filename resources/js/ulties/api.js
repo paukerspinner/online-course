@@ -287,6 +287,7 @@ export const postBlogs = (title, content) => {
     })
 }
 
+
 export const deleteBlog = blog_id => {
     Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
     return new Promise((resolve, reject) => {
@@ -321,10 +322,10 @@ export const postCommentToBlog = (blog_id, comment) => {
     })
 }
 
-export const deleteComment = id => {
+export const deleteComment = comment_id => {
     Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
     return new Promise((resolve, reject) => {
-        Axios.delete(`/api/v1/comments/${id}/`).then(res => {
+        Axios.delete(`/api/v1/comments/${comment_id}/`).then(res => {
             resolve(res);
         }).catch(err => {
             reject(err);
