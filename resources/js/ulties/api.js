@@ -325,7 +325,7 @@ export const postCommentToBlog = (blog_id, comment) => {
 export const deleteComment = comment_id => {
     Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
     return new Promise((resolve, reject) => {
-        Axios.delete(`/api/v1/comments/${comment_id}/`).then(res => {
+        Axios.delete(`/api/v1/comments/${comment_id}`).then(res => {
             resolve(res);
         }).catch(err => {
             reject(err);
