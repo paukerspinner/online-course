@@ -276,6 +276,7 @@ export const getBlog = (blog_id) => {
     })
 }
 
+
 export const postBlogs = (title, content) => {
     Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
     return new Promise((resolve, reject) => {
