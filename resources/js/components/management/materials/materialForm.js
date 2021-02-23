@@ -65,14 +65,14 @@ class MaterialForm extends React.Component {
             }).catch(err => {
                 console.log(err.response);
             });
-        } else {
+        } else {    // type == 'edit'
             let id = this.props.match.params.id;
             marerial_data_form.append('id', id);
             API.updateMaterial(marerial_data_form).then(res => {
                 store.dispatch(actions.setFlassMessage(res.data.message));
                 this.props.history.push('/management/materials');
             }).catch(err => {
-                console.log(err.response);
+                store.dispatch(actions.setFlassMessage(err.response.data.message, 'danger'));
             });
         }
         
