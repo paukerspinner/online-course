@@ -41,18 +41,16 @@ class CoursePage extends React.Component {
                                 <div className="col-xl-6 mb-2" key={material.id}>
                                     <a className="card-bt hover-shadow h-100 none-a" href={'/' + material.path} target="_blank" >
                                         <div className="card-body">
-                                            <div className="row no-gutters align-items-center">
-                                                <div className="col-lg-8">
-                                                    <i className="fa fa-file-pdf-o fa-2x text-gray-300"/>
+                                            <div className="">
+                                                <div>
+                                                    <i className="far fa-file-pdf fa-2x text-gray-300"/>
                                                     <span className="h5 pl-2 font-weight-bold text-gray-800">
                                                         {material.title}
                                                     </span>
                                                 </div>
-                                                <div className="col-lg-4">
-                                                    <div className="pl-2 pt-2">
-                                                        Updated: {moment(material.updated_at).format('DD/MM/YYYY')}
-                                                    </div>
-                                                </div>
+                                                <p className="text-right mb-0">
+                                                    Updated: {moment(material.updated_at).format('DD/MM/YYYY')}
+                                                </p>
                                             </div>
                                         </div>
                                     </a>
