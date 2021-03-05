@@ -55,7 +55,7 @@ class MaterialService
                     return Material::where('section_id', 11)->where('level', Config::get('constants.HARD_LEVEL'))->get();
                 } else if ($exam->grade > Test::GRADE_GOOD) {
                     return Material::where('section_id', 11)->where('level', Config::get('constants.MEDIUM_LEVEL'))->get();
-                } else if ($exam->grade > Test::GRADE_PASS) {
+                } else if ($exam->grade >= Test::GRADE_PASS) {
                     return Material::where('section_id', 11)->where('level', Config::get('constants.EASY_LEVEL'))->get();
                 }
             } else {
