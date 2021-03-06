@@ -387,6 +387,16 @@ export const getUsers = filter_conditions => {
         })
     })
 }
+export const deleteUsers = user_id => {
+    Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
+    return new Promise((resolve, reject) => {
+        Axios.delete(`/api/v1/users/${user_id}`).then(res => {
+            resolve(res);
+        }).catch(err => {
+            reject(err);
+        })
+    })
+}
 
 export const getTranscript = user_id => {
     Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');

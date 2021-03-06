@@ -15,6 +15,15 @@ class UsersManagementPage extends React.Component {
         })
     }
     
+    deleteUser(user_id) {
+        API.deleteUsers(user_id).then(res => {
+            const { users } = this.state
+            this.setState({
+                users: users.filter(user => user.id != user_id)
+            })
+        })
+    }
+
     render() {
         const { users } = this.state; 
         return (
@@ -40,7 +49,9 @@ class UsersManagementPage extends React.Component {
                                 <td>{ [user.surname, user.name, user.patronymic].join(' ') }</td>
                                 <td>{ user.email }</td>
                                 <td>{ user.role }</td>
-                                <td>actions</td>
+                                <td>
+                                    <button onClick={() => this.deleteUser(user.id)} className="btn btn-sm btn-danger">Delete</button>
+                                </td>
                             </tr>
                         )
                     })}
