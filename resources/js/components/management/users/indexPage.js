@@ -16,12 +16,14 @@ class UsersManagementPage extends React.Component {
     }
     
     deleteUser(user_id) {
-        API.deleteUsers(user_id).then(res => {
-            const { users } = this.state
-            this.setState({
-                users: users.filter(user => user.id != user_id)
+        if (confirm('Do you want to permanently delete this user?')) {
+            API.deleteUsers(user_id).then(res => {
+                const { users } = this.state
+                this.setState({
+                    users: users.filter(user => user.id != user_id)
+                })
             })
-        })
+        }
     }
 
     render() {
