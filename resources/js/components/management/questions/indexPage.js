@@ -5,6 +5,8 @@ import * as API from '../../../ulties/api';
 import { QUESTION_LEVEL, QUESTION_TYPE } from '../../../constants';
 import QuestionShow from './questionShow';
 import BreadCrumb from '../../commons/breadcrumb';
+import { store } from '../../../'
+import * as actions from '../../../actions'
 
 class QuestionsManagementPage extends React.Component {
     constructor(props) {
@@ -27,6 +29,15 @@ class QuestionsManagementPage extends React.Component {
         const {preview_question_id} = this.state;
         this.setState({
             preview_question_id: preview_question_id == question_id? null : question_id
+        })
+    }
+
+    deleteQuestion(question_id) {
+        API.deleteQuestion(question_id).then(res => {
+            store.dispatch(actions.setFlassMessage(res.data.message))
+            this.setState({
+                questions: this.state.questions.filter(question => question.id != question_id)
+            })
         })
     }
     
@@ -59,7 +70,8 @@ class QuestionsManagementPage extends React.Component {
                                     <td>{question.type == QUESTION_TYPE.MULTIPLE_CHOICE? 'Multiple Choice' : 'Single Choice'}</td>
                                     <td>
                                         <Link to={`/management/questions/${question.id}/edit`} className="btn btn-sm btn-primary">Edit</Link>&nbsp;
-                                        <a className="btn btn-sm btn-info" onClick={() => this.showPreviewQuesiton(question.id)}>Preview</a>
+                                        <a className="btn btn-sm btn-info" onClick={() => this.showPreviewQuesiton(question.id)}>Preview</a>&nbsp;
+                                        <button onClick={() => this.deleteQuestion(question.id)} className="btn btn-sm btn-danger">Delete</button>
                                     </td>
                                 </tr>
                                 { preview_question_id == question.id &&

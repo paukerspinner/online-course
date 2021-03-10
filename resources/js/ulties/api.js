@@ -120,6 +120,17 @@ export const getQuestions = () => {
     })
 }
 
+export const deleteQuestion = id => {
+    Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
+    return new Promise((resolve, reject) => {
+        Axios.delete(`/api/v1/questions/${id}`).then(res => {
+            resolve(res);
+        }).catch(err => {
+            reject(err);
+        })
+    })
+}
+
 export const makeTest = () => {
     Axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
     return new Promise((resolve, reject) => {
