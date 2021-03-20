@@ -1,7 +1,7 @@
 <?php
 return [
     'GRADE_PASS' => 60,
-    'GRADE_GOOD' => 74,
+    'GRADE_GOOD' => 76,
     'GRADE_EXCELLENT' => 90,
 
     // 'USER_LEVEL_FAIL' => -1,
