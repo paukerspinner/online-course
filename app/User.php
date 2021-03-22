@@ -53,7 +53,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function getCompletedCourseAttribute() {
         $transcript = $this->transcript;
-        return end($transcript)->rating * 100 / 20 >= Config::get('constants.GRADE_PASS');
+        return end($transcript)->rating * 100 / 20 >= Test::GRADE_PASS;
     }
 
     public function getGradeAttribute() {

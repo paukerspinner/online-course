@@ -63,7 +63,7 @@ class MaterialService
             }
         } else {
             $last_entrance_test = TestService::getLastTest($current_section);
-            if ($last_entrance_test && $last_entrance_test->grade < Config::get('constants.GRADE_PASS')) {
+            if ($last_entrance_test && $last_entrance_test->grade < Test::GRADE_PASS) {
                 $materials = Material::where('section_id', $current_section)->get();
             } else {
                 $materials = [];

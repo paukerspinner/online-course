@@ -104,7 +104,7 @@ class TestService
     public static function getCurrentSectionId() {
         $test = auth()->user()->tests()->get()->last();
         if ($test == null) { return 1; }
-        if ($test->grade == null || $test->grade < Config::get('constants.GRADE_PASS')) {
+        if ($test->grade == null || $test->grade < Test::GRADE_PASS) {
             return $test->section_id;
         } else {
             return $test->section_id + 1;
@@ -118,29 +118,29 @@ class TestService
         } else {
             switch($test->level) {
                 case Config::get('constants.EASY_LEVEL'):
-                    if ($test->grade > Config::get('constants.GRADE_EXCELLENT')) {
+                    if ($test->grade > Test::GRADE_EXCELLENT) {
                         $score = Test::EXCELLENT_GRADE_EASY_LEVEL;
-                    } else if ($test->grade > Config::get('constants.GRADE_GOOD')) {
+                    } else if ($test->grade > Test::GRADE_GOOD) {
                         $score = Test::GOOD_GRADE_EASY_LEVEL;
-                    } else if ($test->grade >= Config::get('constants.GRADE_PASS')) {
+                    } else if ($test->grade >= Test::GRADE_PASS) {
                         $score = Test::PASS_GRADE_EASY_LEVEL;
                     }
                     break;
                 case Config::get('constants.MEDIUM_LEVEL'):
-                    if ($test->grade > Config::get('constants.GRADE_EXCELLENT')) {
+                    if ($test->grade > Test::GRADE_EXCELLENT) {
                         $score = Test::EXCELLENT_GRADE_MEDIUM_LEVEL;
-                    } else if ($test->grade > Config::get('constants.GRADE_GOOD')) {
+                    } else if ($test->grade > Test::GRADE_GOOD) {
                         $score = Test::GOOD_GRADE_MEDIUM_LEVEL;
-                    } else if ($test->grade >= Config::get('constants.GRADE_PASS')) {
+                    } else if ($test->grade >= Test::GRADE_PASS) {
                         $score = Test::PASS_GRADE_MEDIUM_LEVEL;
                     }
                     break;
                 case Config::get('constants.HARD_LEVEL'):
-                    if ($test->grade > Config::get('constants.GRADE_EXCELLENT')) {
+                    if ($test->grade > Test::GRADE_EXCELLENT) {
                         $score = Test::EXCELLENT_GRADE_HARD_LEVEL;
-                    } else if ($test->grade > Config::get('constants.GRADE_GOOD')) {
+                    } else if ($test->grade > Test::GRADE_GOOD) {
                         $score = Test::GOOD_GRADE_HARD_LEVEL;
-                    } else if ($test->grade >= Config::get('constants.GRADE_PASS')) {
+                    } else if ($test->grade >= Test::GRADE_PASS) {
                         $score = Test::PASS_GRADE_HARD_LEVEL;
                     }
                     break;
