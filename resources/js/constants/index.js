@@ -29,7 +29,7 @@ export const QUESTION_LEVEL = {
 
 export const TEST_GRADE = {
     PASS : 60,
-    GOOD : 80,
+    GOOD : 76,
     EXCELLENT : 90,
 }
 

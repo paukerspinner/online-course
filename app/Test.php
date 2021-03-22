@@ -18,7 +18,7 @@ class Test extends Model
     const EXCELLENT_GRADE_HARD_LEVEL = 10;
 
     const GRADE_PASS = 60;
-    const GRADE_GOOD = 74;
+    const GRADE_GOOD = 76;
     const GRADE_EXCELLENT = 90;
 
     const QUES_NUM_PER_MOD_FOR_EXAM = 5;
